@@ -1,0 +1,171 @@
+schema_version: 1
+description: ''
+mode_bits:
+  write: 22
+  publish: 21
+evidence:
+  FHW-330: ''
+  FHW-344: ''
+  FHW-357: ''
+  FHW-359: ''
+  EHASH-ALU: ''
+  D8DB-R5: ''
+  FLAG-EXT: ''
+  NEUTRAL: ''
+  SPECIAL-PRED: ''
+publish_effect: ''
+families:
+- name: ''
+  base_value: 0xd280003e
+  action: set
+  index_source: immediate
+  index_order: normal
+  description: ''
+  cells:
+  - - HYP-0492-bset-discard-preserve
+    - bset32.d2803e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0493-bset-discard-publish
+    - bset32.d2a03e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0494-bset-write-preserve
+    - bset32.d2c03e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0495-bset-write-publish
+    - bset32.d2e03e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+- name: ''
+  base_value: 0xd300003e
+  action: clear
+  index_source: immediate
+  index_order: normal
+  description: ''
+  cells:
+  - - HYP-0496-bclr-discard-preserve
+    - bclr32.d3003e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0497-bclr-discard-publish
+    - bclr32.d3203e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0498-bclr-write-preserve
+    - bclr32.d3403e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+  - - HYP-0499-bclr-write-publish
+    - bclr32.d3603e?
+    - 250
+    - - FHW-359
+      - EHASH-ALU
+- name: ''
+  base_value: 0xda800038
+  action: set
+  index_source: register
+  index_order: normal
+  description: ''
+  cells:
+  - - HYP-0297-da80-bset-discard
+    - bset32.da8038?
+    - 265
+    - - FHW-357
+  - - HYP-0309-daa0-bset-test
+    - bset32.daa038?
+    - 265
+    - - FHW-357
+  - - HYP-0110-dac0-bset
+    - bset32.dac038?
+    - 200
+    - - D8DB-R5
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0310-dae0-bset-publish
+    - bset32.dae038?
+    - 265
+    - - FHW-357
+- name: ''
+  base_value: 0xdb000038
+  action: clear
+  index_source: register
+  index_order: normal
+  description: ''
+  cells:
+  - - HYP-0298-db00-bclr-discard
+    - bclr32.db0038?
+    - 265
+    - - FHW-357
+  - - HYP-0311-db20-bclr-test
+    - bclr32.db2038?
+    - 265
+    - - FHW-357
+  - - HYP-0110-db40-bclr
+    - bclr32.db4038?
+    - 200
+    - - D8DB-R5
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0312-db60-bclr-publish
+    - bclr32.db6038?
+    - 265
+    - - FHW-357
+- name: ''
+  base_value: 0xde800038
+  action: set
+  index_source: register
+  index_order: reverse
+  description: ''
+  cells:
+  - - HYP-0304-de80-bset-reverse-discard
+    - bset32.de8038?
+    - 265
+    - - FHW-357
+  - - HYP-0320-dea0-bset-reverse-test
+    - bset32.dea038?
+    - 265
+    - - FHW-357
+  - - HYP-0254-dec-bset-reverse
+    - bset32
+    - 250
+    - - FHW-330
+      - FHW-344
+    - legacy-reverse-set
+  - - HYP-0321-dee0-bset-reverse-publish
+    - bset32.dee038?
+    - 265
+    - - FHW-357
+- name: ''
+  base_value: 0xdf000038
+  action: clear
+  index_source: register
+  index_order: reverse
+  description: ''
+  cells:
+  - - HYP-0305-df00-bclr-reverse-discard
+    - bclr32.df0038?
+    - 265
+    - - FHW-357
+  - - HYP-0322-df20-bclr-reverse-test
+    - bclr32.df2038?
+    - 265
+    - - FHW-357
+  - - HYP-0193-df40-bclr-rev
+    - bclr32.rev.df4038?
+    - 230
+    - - NEUTRAL
+      - SPECIAL-PRED
+    - legacy-reverse-clear
+  - - HYP-0323-df60-bclr-reverse-publish
+    - bclr32.df6038?
+    - 265
+    - - FHW-357

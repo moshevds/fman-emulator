@@ -1,0 +1,1323 @@
+schema_version: 1
+operand_layouts:
+  layout_00:
+  - - left
+    - register
+    - 16
+    - 5
+  - - bit_index
+    - immediate
+    - 11
+    - 5
+  - - result_or_auxiliary
+    - raw
+    - 6
+    - 5
+  - - predicate
+    - raw
+    - 1
+    - 5
+  layout_01:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - auxiliary
+    - raw
+    - 6
+    - 5
+  - - predicate
+    - raw
+    - 1
+    - 5
+  layout_02:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - auxiliary_10_6
+    - raw
+    - 6
+    - 5
+  layout_03:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - destination
+    - register
+    - 6
+    - 5
+  layout_04:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - destination
+    - register
+    - 6
+    - 5
+  - - predicate
+    - raw
+    - 1
+    - 5
+  layout_05:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - result_or_auxiliary
+    - raw
+    - 6
+    - 5
+  layout_06:
+  - - left
+    - register
+    - 16
+    - 5
+  - - right
+    - register
+    - 11
+    - 5
+  - - result_or_auxiliary
+    - raw
+    - 6
+    - 5
+  - - predicate
+    - raw
+    - 1
+    - 5
+  layout_07:
+  - - left_20_16
+    - register
+    - 16
+    - 5
+  - - right_15_11
+    - register
+    - 11
+    - 5
+  - - destination_10_6
+    - register
+    - 6
+    - 5
+  layout_08:
+  - - lhs
+    - register
+    - 16
+    - 5
+  - - rhs
+    - register
+    - 11
+    - 5
+  - - auxiliary_10_6
+    - raw
+    - 6
+    - 5
+  layout_09:
+  - - operand_20_16
+    - raw
+    - 16
+    - 5
+  - - source_15_11
+    - raw
+    - 11
+    - 5
+  - - auxiliary_10_6
+    - raw
+    - 6
+    - 5
+  layout_10:
+  - - operand_20_16
+    - raw
+    - 16
+    - 5
+  - - source_15_11
+    - raw
+    - 11
+    - 5
+  - - raw_10_6
+    - raw
+    - 6
+    - 5
+  layout_11:
+  - - operand_20_16
+    - raw
+    - 16
+    - 5
+  - - source_15_11
+    - raw
+    - 11
+    - 5
+  - - result_10_6
+    - raw
+    - 6
+    - 5
+evidence:
+  FHW-359:
+    analysis: ''
+    result: ''
+  FHW-362:
+    analysis: ''
+    result: ''
+  FHW-363:
+    analysis: ''
+    result: ''
+  FHW-364:
+    analysis: ''
+    result: ''
+logical_transforms:
+- name: bitrev8
+  selector: 0
+  expression: ''
+- name: swap8
+  selector: 8
+  expression: ''
+- name: rol16
+  selector: 16
+  expression: ''
+  16): null
+- name: lsr8
+  selector: 24
+  expression: ''
+- name: lsr1
+  selector: 32
+  expression: ''
+- name: low16
+  selector: 40
+  expression: ''
+- name: bswap
+  selector: 48
+  expression: ''
+- name: plain
+  selector: 56
+  expression: ''
+logical_families:
+- mnemonic: and32
+  base_value: 0xd9000000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0525-d9000000-and32-bitrev8-discard-preserve
+    - 300
+    - and32.bitrev8.d9000000?
+    - layout_05
+  - - HYP-0526-d9200000-and32-bitrev8-discard-publish
+    - 300
+    - and32.bitrev8.d9200000?
+    - layout_05
+  - - HYP-0527-d9400000-and32-bitrev8-write-preserve
+    - 300
+    - and32.bitrev8.d9400000?
+    - layout_05
+  - - HYP-0528-d9600000-and32-bitrev8-write-publish
+    - 300
+    - and32.bitrev8.d9600000?
+    - layout_05
+  - - HYP-0529-d9000008-and32-swap8-discard-preserve
+    - 300
+    - and32.swap8.d9000008?
+    - layout_05
+  - - HYP-0530-d9200008-and32-swap8-discard-publish
+    - 300
+    - and32.swap8.d9200008?
+    - layout_05
+  - - HYP-0531-d9400008-and32-swap8-write-preserve
+    - 300
+    - and32.swap8.d9400008?
+    - layout_05
+  - - HYP-0532-d9600008-and32-swap8-write-publish
+    - 300
+    - and32.swap8.d9600008?
+    - layout_05
+  - - HYP-0533-d9000010-and32-rol16-discard-preserve
+    - 300
+    - and32.rol16.d9000010?
+    - layout_05
+  - - HYP-0534-d9200010-and32-rol16-discard-publish
+    - 300
+    - and32.rol16.d9200010?
+    - layout_05
+  - - HYP-0535-d9400010-and32-rol16-write-preserve
+    - 300
+    - and32.rol16.d9400010?
+    - layout_05
+  - - HYP-0536-d9600010-and32-rol16-write-publish
+    - 300
+    - and32.rol16.d9600010?
+    - layout_05
+  - - HYP-0537-d9000018-and32-lsr8-discard-preserve
+    - 300
+    - and32.lsr8.d9000018?
+    - layout_05
+  - - HYP-0538-d9200018-and32-lsr8-discard-publish
+    - 300
+    - and32.lsr8.d9200018?
+    - layout_05
+  - - HYP-0539-d9400018-and32-lsr8-write-preserve
+    - 300
+    - and32.lsr8.d9400018?
+    - layout_05
+  - - HYP-0540-d9600018-and32-lsr8-write-publish
+    - 300
+    - and32.lsr8.d9600018?
+    - layout_05
+  - - HYP-0541-d9000020-and32-lsr1-discard-preserve
+    - 300
+    - and32.lsr1.d9000020?
+    - layout_05
+  - - HYP-0542-d9200020-and32-lsr1-discard-publish
+    - 300
+    - and32.lsr1.d9200020?
+    - layout_05
+  - - HYP-0543-d9400020-and32-lsr1-write-preserve
+    - 300
+    - and32.lsr1.d9400020?
+    - layout_05
+  - - HYP-0544-d9600020-and32-lsr1-write-publish
+    - 300
+    - and32.lsr1.d9600020?
+    - layout_05
+  - - HYP-0545-d9000028-and32-low16-discard-preserve
+    - 300
+    - and32.low16.d9000028?
+    - layout_05
+  - - HYP-0546-d9200028-and32-low16-discard-publish
+    - 300
+    - and32.low16.d9200028?
+    - layout_05
+  - - HYP-0547-d9400028-and32-low16-write-preserve
+    - 300
+    - and32.low16.d9400028?
+    - layout_05
+  - - HYP-0548-d9600028-and32-low16-write-publish
+    - 300
+    - and32.low16.d9600028?
+    - layout_05
+  - - HYP-0326-d900-and-bswap-discard
+    - 265
+    - and32.bswap.d90030?
+    - layout_02
+  - - HYP-0420-axis-d9200030
+    - 270
+    - and32.axis.d9200030?
+    - layout_02
+  - - HYP-0421-axis-d9400030
+    - 270
+    - and32.axis.d9400030?
+    - layout_03
+  - - HYP-0363-d960-and-bswap-publish
+    - 265
+    - and32.bswap.d96030?
+    - layout_03
+  - - HYP-0294-d900-and-discard
+    - 265
+    - and32.d90038?
+    - layout_02
+  - - HYP-0111-d920-tand
+    - 200
+    - testand32.d92038?
+    - layout_09
+  - - HYP-0110-d940-and
+    - 200
+    - and32.d94038?
+    - layout_11
+  - - HYP-0110-d960-and
+    - 200
+    - and32.d96038?
+    - layout_11
+- mnemonic: or32
+  base_value: 0xd9800000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0327-d980-or-bitrev8-discard
+    - 265
+    - or32.bitrev8.d98000?
+    - layout_02
+  - - HYP-0422-axis-d9a00000
+    - 270
+    - or32.axis.d9a00000?
+    - layout_02
+  - - HYP-0364-d9c0-or-bitrev8
+    - 265
+    - or32.bitrev8.d9c000?
+    - layout_03
+  - - HYP-0370-d9e0-or-bitrev8-publish
+    - 265
+    - or32.bitrev8.d9e000?
+    - layout_03
+  - - HYP-0328-d980-or-swap8-discard
+    - 265
+    - or32.swap8.d98008?
+    - layout_02
+  - - HYP-0423-axis-d9a00008
+    - 270
+    - or32.axis.d9a00008?
+    - layout_02
+  - - HYP-0365-d9c0-or-swap8
+    - 265
+    - or32.swap8.d9c008?
+    - layout_03
+  - - HYP-0371-d9e0-or-swap8-publish
+    - 265
+    - or32.swap8.d9e008?
+    - layout_03
+  - - HYP-0329-d980-or-rol16-discard
+    - 265
+    - or32.rol16.d98010?
+    - layout_02
+  - - HYP-0424-axis-d9a00010
+    - 270
+    - or32.axis.d9a00010?
+    - layout_02
+  - - HYP-0366-d9c0-or-rol16
+    - 265
+    - or32.rol16.d9c010?
+    - layout_03
+  - - HYP-0372-d9e0-or-rol16-publish
+    - 265
+    - or32.rol16.d9e010?
+    - layout_03
+  - - HYP-0330-d980-or-lsr8-discard
+    - 265
+    - or32.lsr8.d98018?
+    - layout_02
+  - - HYP-0425-axis-d9a00018
+    - 270
+    - or32.axis.d9a00018?
+    - layout_02
+  - - HYP-0367-d9c0-or-lsr8
+    - 265
+    - or32.lsr8.d9c018?
+    - layout_03
+  - - HYP-0373-d9e0-or-lsr8-publish
+    - 265
+    - or32.lsr8.d9e018?
+    - layout_03
+  - - HYP-0331-d980-or-lsr1-discard
+    - 265
+    - or32.lsr1.d98020?
+    - layout_02
+  - - HYP-0549-d9a00020-or32-lsr1-discard-publish
+    - 300
+    - or32.lsr1.d9a00020?
+    - layout_05
+  - - HYP-0428-axis-d9c00020
+    - 270
+    - or32.axis.d9c00020?
+    - layout_03
+  - - HYP-0374-d9e0-or-lsr1-publish
+    - 265
+    - or32.lsr1.d9e020?
+    - layout_03
+  - - HYP-0332-d980-or-low16-discard
+    - 265
+    - or32.low16.d98028?
+    - layout_02
+  - - HYP-0426-axis-d9a00028
+    - 270
+    - or32.axis.d9a00028?
+    - layout_02
+  - - HYP-0368-d9c0-or-low16
+    - 265
+    - or32.low16.d9c028?
+    - layout_03
+  - - HYP-0375-d9e0-or-low16-publish
+    - 265
+    - or32.low16.d9e028?
+    - layout_03
+  - - HYP-0333-d980-or-bswap-discard
+    - 265
+    - or32.bswap.d98030?
+    - layout_02
+  - - HYP-0427-axis-d9a00030
+    - 270
+    - or32.axis.d9a00030?
+    - layout_02
+  - - HYP-0369-d9c0-or-bswap
+    - 265
+    - or32.bswap.d9c030?
+    - layout_03
+  - - HYP-0376-d9e0-or-bswap-publish
+    - 265
+    - or32.bswap.d9e030?
+    - layout_03
+  - - HYP-0295-d980-or-discard
+    - 265
+    - or32.d98038?
+    - layout_02
+  - - HYP-0111-d9a0-tor
+    - 200
+    - testor32.d9a038?
+    - layout_10
+  - - HYP-0110-d9c0-or
+    - 200
+    - or32.d9c038?
+    - layout_11
+  - - HYP-0307-d9e0-or-publish
+    - 265
+    - or32.d9e038?
+    - layout_03
+- mnemonic: xor32
+  base_value: 0xda000000
+  equation: ''
+  description: ''
+  evidence: FHW-363
+  cells:
+  - - HYP-0642-da000000-xor32-bitrev8-discard-preserve
+    - 300
+    - xor32.bitrev8.da000000?
+    - layout_05
+  - - HYP-0643-da200000-xor32-bitrev8-discard-publish
+    - 300
+    - xor32.bitrev8.da200000?
+    - layout_05
+  - - HYP-0644-da400000-xor32-bitrev8-write-preserve
+    - 300
+    - xor32.bitrev8.da400000?
+    - layout_05
+  - - HYP-0645-da600000-xor32-bitrev8-write-publish
+    - 300
+    - xor32.bitrev8.da600000?
+    - layout_05
+  - - HYP-0646-da000008-xor32-swap8-discard-preserve
+    - 300
+    - xor32.swap8.da000008?
+    - layout_05
+  - - HYP-0647-da200008-xor32-swap8-discard-publish
+    - 300
+    - xor32.swap8.da200008?
+    - layout_05
+  - - HYP-0648-da400008-xor32-swap8-write-preserve
+    - 300
+    - xor32.swap8.da400008?
+    - layout_05
+  - - HYP-0649-da600008-xor32-swap8-write-publish
+    - 300
+    - xor32.swap8.da600008?
+    - layout_05
+  - - HYP-0650-da000010-xor32-rol16-discard-preserve
+    - 300
+    - xor32.rol16.da000010?
+    - layout_05
+  - - HYP-0651-da200010-xor32-rol16-discard-publish
+    - 300
+    - xor32.rol16.da200010?
+    - layout_05
+  - - HYP-0652-da400010-xor32-rol16-write-preserve
+    - 300
+    - xor32.rol16.da400010?
+    - layout_05
+  - - HYP-0653-da600010-xor32-rol16-write-publish
+    - 300
+    - xor32.rol16.da600010?
+    - layout_05
+  - - HYP-0654-da000018-xor32-lsr8-discard-preserve
+    - 300
+    - xor32.lsr8.da000018?
+    - layout_05
+  - - HYP-0655-da200018-xor32-lsr8-discard-publish
+    - 300
+    - xor32.lsr8.da200018?
+    - layout_05
+  - - HYP-0656-da400018-xor32-lsr8-write-preserve
+    - 300
+    - xor32.lsr8.da400018?
+    - layout_05
+  - - HYP-0657-da600018-xor32-lsr8-write-publish
+    - 300
+    - xor32.lsr8.da600018?
+    - layout_05
+  - - HYP-0658-da000020-xor32-lsr1-discard-preserve
+    - 300
+    - xor32.lsr1.da000020?
+    - layout_05
+  - - HYP-0659-da200020-xor32-lsr1-discard-publish
+    - 300
+    - xor32.lsr1.da200020?
+    - layout_05
+  - - HYP-0660-da400020-xor32-lsr1-write-preserve
+    - 300
+    - xor32.lsr1.da400020?
+    - layout_05
+  - - HYP-0661-da600020-xor32-lsr1-write-publish
+    - 300
+    - xor32.lsr1.da600020?
+    - layout_05
+  - - HYP-0662-da000028-xor32-low16-discard-preserve
+    - 300
+    - xor32.low16.da000028?
+    - layout_05
+  - - HYP-0663-da200028-xor32-low16-discard-publish
+    - 300
+    - xor32.low16.da200028?
+    - layout_05
+  - - HYP-0664-da400028-xor32-low16-write-preserve
+    - 300
+    - xor32.low16.da400028?
+    - layout_05
+  - - HYP-0665-da600028-xor32-low16-write-publish
+    - 300
+    - xor32.low16.da600028?
+    - layout_05
+  - - HYP-0666-da000030-xor32-bswap-discard-preserve
+    - 300
+    - xor32.bswap.da000030?
+    - layout_05
+  - - HYP-0667-da200030-xor32-bswap-discard-publish
+    - 300
+    - xor32.bswap.da200030?
+    - layout_05
+  - - HYP-0668-da400030-xor32-bswap-write-preserve
+    - 300
+    - xor32.bswap.da400030?
+    - layout_05
+  - - HYP-0669-da600030-xor32-bswap-write-publish
+    - 300
+    - xor32.bswap.da600030?
+    - layout_05
+  - - HYP-0296-da00-xor-discard
+    - 265
+    - xor32.da0038?
+    - layout_02
+  - - HYP-0111-da20-txor
+    - 200
+    - testxor32.da2038?
+    - layout_10
+  - - HYP-0110-da40-xor
+    - 200
+    - xor32.da4038?
+    - layout_11
+  - - HYP-0308-da60-xor-publish
+    - 265
+    - xor32.da6038?
+    - layout_03
+- mnemonic: andn32
+  base_value: 0xdd000000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0550-dd000000-andn32-bitrev8-discard-preserve
+    - 300
+    - andn32.bitrev8.dd000000?
+    - layout_05
+  - - HYP-0551-dd200000-andn32-bitrev8-discard-publish
+    - 300
+    - andn32.bitrev8.dd200000?
+    - layout_05
+  - - HYP-0552-dd400000-andn32-bitrev8-write-preserve
+    - 300
+    - andn32.bitrev8.dd400000?
+    - layout_05
+  - - HYP-0553-dd600000-andn32-bitrev8-write-publish
+    - 300
+    - andn32.bitrev8.dd600000?
+    - layout_05
+  - - HYP-0554-dd000008-andn32-swap8-discard-preserve
+    - 300
+    - andn32.swap8.dd000008?
+    - layout_05
+  - - HYP-0555-dd200008-andn32-swap8-discard-publish
+    - 300
+    - andn32.swap8.dd200008?
+    - layout_05
+  - - HYP-0556-dd400008-andn32-swap8-write-preserve
+    - 300
+    - andn32.swap8.dd400008?
+    - layout_05
+  - - HYP-0557-dd600008-andn32-swap8-write-publish
+    - 300
+    - andn32.swap8.dd600008?
+    - layout_05
+  - - HYP-0558-dd000010-andn32-rol16-discard-preserve
+    - 300
+    - andn32.rol16.dd000010?
+    - layout_05
+  - - HYP-0559-dd200010-andn32-rol16-discard-publish
+    - 300
+    - andn32.rol16.dd200010?
+    - layout_05
+  - - HYP-0560-dd400010-andn32-rol16-write-preserve
+    - 300
+    - andn32.rol16.dd400010?
+    - layout_05
+  - - HYP-0561-dd600010-andn32-rol16-write-publish
+    - 300
+    - andn32.rol16.dd600010?
+    - layout_05
+  - - HYP-0562-dd000018-andn32-lsr8-discard-preserve
+    - 300
+    - andn32.lsr8.dd000018?
+    - layout_05
+  - - HYP-0563-dd200018-andn32-lsr8-discard-publish
+    - 300
+    - andn32.lsr8.dd200018?
+    - layout_05
+  - - HYP-0564-dd400018-andn32-lsr8-write-preserve
+    - 300
+    - andn32.lsr8.dd400018?
+    - layout_05
+  - - HYP-0565-dd600018-andn32-lsr8-write-publish
+    - 300
+    - andn32.lsr8.dd600018?
+    - layout_05
+  - - HYP-0566-dd000020-andn32-lsr1-discard-preserve
+    - 300
+    - andn32.lsr1.dd000020?
+    - layout_05
+  - - HYP-0567-dd200020-andn32-lsr1-discard-publish
+    - 300
+    - andn32.lsr1.dd200020?
+    - layout_05
+  - - HYP-0568-dd400020-andn32-lsr1-write-preserve
+    - 300
+    - andn32.lsr1.dd400020?
+    - layout_05
+  - - HYP-0569-dd600020-andn32-lsr1-write-publish
+    - 300
+    - andn32.lsr1.dd600020?
+    - layout_05
+  - - HYP-0570-dd000028-andn32-low16-discard-preserve
+    - 300
+    - andn32.low16.dd000028?
+    - layout_05
+  - - HYP-0571-dd200028-andn32-low16-discard-publish
+    - 300
+    - andn32.low16.dd200028?
+    - layout_05
+  - - HYP-0572-dd400028-andn32-low16-write-preserve
+    - 300
+    - andn32.low16.dd400028?
+    - layout_05
+  - - HYP-0573-dd600028-andn32-low16-write-publish
+    - 300
+    - andn32.low16.dd600028?
+    - layout_05
+  - - HYP-0574-dd000030-andn32-bswap-discard-preserve
+    - 300
+    - andn32.bswap.dd000030?
+    - layout_05
+  - - HYP-0575-dd200030-andn32-bswap-discard-publish
+    - 300
+    - andn32.bswap.dd200030?
+    - layout_05
+  - - HYP-0576-dd400030-andn32-bswap-write-preserve
+    - 300
+    - andn32.bswap.dd400030?
+    - layout_05
+  - - HYP-0577-dd600030-andn32-bswap-write-publish
+    - 300
+    - andn32.bswap.dd600030?
+    - layout_05
+  - - HYP-0301-dd00-andn-discard
+    - 265
+    - andn32.dd0038?
+    - layout_02
+  - - HYP-0314-dd20-andn-test
+    - 265
+    - andn32.dd2038?
+    - layout_02
+  - - HYP-0193-dd40-andn
+    - 230
+    - andn32.dd4038?
+    - layout_07
+  - - HYP-0315-dd60-andn-publish
+    - 265
+    - andn32.dd6038?
+    - layout_03
+- mnemonic: orn32
+  base_value: 0xdd800000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0353-dd80-orn-bitrev8-discard
+    - 265
+    - orn32.bitrev8.dd8000?
+    - layout_02
+  - - HYP-0506-dda0-orn-bitrev8-discard-publish
+    - 265
+    - orn32.bitrev8.dda000?
+    - layout_02
+  - - HYP-0507-ddc0-orn-bitrev8
+    - 265
+    - orn32.bitrev8.ddc000?
+    - layout_03
+  - - HYP-0394-dde0-orn-bitrev8-publish
+    - 265
+    - orn32.bitrev8.dde000?
+    - layout_03
+  - - HYP-0578-dd800008-orn32-swap8-discard-preserve
+    - 300
+    - orn32.swap8.dd800008?
+    - layout_05
+  - - HYP-0579-dda00008-orn32-swap8-discard-publish
+    - 300
+    - orn32.swap8.dda00008?
+    - layout_05
+  - - HYP-0580-ddc00008-orn32-swap8-write-preserve
+    - 300
+    - orn32.swap8.ddc00008?
+    - layout_05
+  - - HYP-0581-dde00008-orn32-swap8-write-publish
+    - 300
+    - orn32.swap8.dde00008?
+    - layout_05
+  - - HYP-0582-dd800010-orn32-rol16-discard-preserve
+    - 300
+    - orn32.rol16.dd800010?
+    - layout_05
+  - - HYP-0583-dda00010-orn32-rol16-discard-publish
+    - 300
+    - orn32.rol16.dda00010?
+    - layout_05
+  - - HYP-0584-ddc00010-orn32-rol16-write-preserve
+    - 300
+    - orn32.rol16.ddc00010?
+    - layout_05
+  - - HYP-0585-dde00010-orn32-rol16-write-publish
+    - 300
+    - orn32.rol16.dde00010?
+    - layout_05
+  - - HYP-0586-dd800018-orn32-lsr8-discard-preserve
+    - 300
+    - orn32.lsr8.dd800018?
+    - layout_05
+  - - HYP-0587-dda00018-orn32-lsr8-discard-publish
+    - 300
+    - orn32.lsr8.dda00018?
+    - layout_05
+  - - HYP-0588-ddc00018-orn32-lsr8-write-preserve
+    - 300
+    - orn32.lsr8.ddc00018?
+    - layout_05
+  - - HYP-0589-dde00018-orn32-lsr8-write-publish
+    - 300
+    - orn32.lsr8.dde00018?
+    - layout_05
+  - - HYP-0590-dd800020-orn32-lsr1-discard-preserve
+    - 300
+    - orn32.lsr1.dd800020?
+    - layout_05
+  - - HYP-0591-dda00020-orn32-lsr1-discard-publish
+    - 300
+    - orn32.lsr1.dda00020?
+    - layout_05
+  - - HYP-0592-ddc00020-orn32-lsr1-write-preserve
+    - 300
+    - orn32.lsr1.ddc00020?
+    - layout_05
+  - - HYP-0593-dde00020-orn32-lsr1-write-publish
+    - 300
+    - orn32.lsr1.dde00020?
+    - layout_05
+  - - HYP-0594-dd800028-orn32-low16-discard-preserve
+    - 300
+    - orn32.low16.dd800028?
+    - layout_05
+  - - HYP-0595-dda00028-orn32-low16-discard-publish
+    - 300
+    - orn32.low16.dda00028?
+    - layout_05
+  - - HYP-0596-ddc00028-orn32-low16-write-preserve
+    - 300
+    - orn32.low16.ddc00028?
+    - layout_05
+  - - HYP-0597-dde00028-orn32-low16-write-publish
+    - 300
+    - orn32.low16.dde00028?
+    - layout_05
+  - - HYP-0598-dd800030-orn32-bswap-discard-preserve
+    - 300
+    - orn32.bswap.dd800030?
+    - layout_05
+  - - HYP-0599-dda00030-orn32-bswap-discard-publish
+    - 300
+    - orn32.bswap.dda00030?
+    - layout_05
+  - - HYP-0600-ddc00030-orn32-bswap-write-preserve
+    - 300
+    - orn32.bswap.ddc00030?
+    - layout_05
+  - - HYP-0601-dde00030-orn32-bswap-write-publish
+    - 300
+    - orn32.bswap.dde00030?
+    - layout_05
+  - - HYP-0302-dd80-orn-discard
+    - 265
+    - orn32.dd8038?
+    - layout_02
+  - - HYP-0236-residual-dda0-test-orn
+    - 260
+    - testorn32.dda038?
+    - layout_08
+  - - HYP-0316-ddc0-orn-store
+    - 265
+    - orn32.ddc038?
+    - layout_03
+  - - HYP-0317-dde0-orn-publish
+    - 265
+    - orn32.dde038?
+    - layout_03
+- mnemonic: xnor32
+  base_value: 0xde000000
+  equation: ''
+  description: ''
+  evidence: FHW-363
+  cells:
+  - - HYP-0618-de000000-xnor32-bitrev8-discard-preserve
+    - 300
+    - xnor32.bitrev8.de000000?
+    - layout_05
+  - - HYP-0619-de200000-xnor32-bitrev8-discard-publish
+    - 300
+    - xnor32.bitrev8.de200000?
+    - layout_05
+  - - HYP-0620-de400000-xnor32-bitrev8-write-preserve
+    - 300
+    - xnor32.bitrev8.de400000?
+    - layout_05
+  - - HYP-0621-de600000-xnor32-bitrev8-write-publish
+    - 300
+    - xnor32.bitrev8.de600000?
+    - layout_05
+  - - HYP-0354-de00-xnor-swap8-discard
+    - 265
+    - xnor32.swap8.de0008?
+    - layout_02
+  - - HYP-0508-de20-xnor-swap8-discard-publish
+    - 265
+    - xnor32.swap8.de2008?
+    - layout_02
+  - - HYP-0395-de40-xnor-swap8
+    - 265
+    - xnor32.swap8.de4008?
+    - layout_03
+  - - HYP-0509-de60-xnor-swap8-publish
+    - 265
+    - xnor32.swap8.de6008?
+    - layout_03
+  - - HYP-0622-de000010-xnor32-rol16-discard-preserve
+    - 300
+    - xnor32.rol16.de000010?
+    - layout_05
+  - - HYP-0623-de200010-xnor32-rol16-discard-publish
+    - 300
+    - xnor32.rol16.de200010?
+    - layout_05
+  - - HYP-0624-de400010-xnor32-rol16-write-preserve
+    - 300
+    - xnor32.rol16.de400010?
+    - layout_05
+  - - HYP-0625-de600010-xnor32-rol16-write-publish
+    - 300
+    - xnor32.rol16.de600010?
+    - layout_05
+  - - HYP-0626-de000018-xnor32-lsr8-discard-preserve
+    - 300
+    - xnor32.lsr8.de000018?
+    - layout_05
+  - - HYP-0627-de200018-xnor32-lsr8-discard-publish
+    - 300
+    - xnor32.lsr8.de200018?
+    - layout_05
+  - - HYP-0628-de400018-xnor32-lsr8-write-preserve
+    - 300
+    - xnor32.lsr8.de400018?
+    - layout_05
+  - - HYP-0629-de600018-xnor32-lsr8-write-publish
+    - 300
+    - xnor32.lsr8.de600018?
+    - layout_05
+  - - HYP-0630-de000020-xnor32-lsr1-discard-preserve
+    - 300
+    - xnor32.lsr1.de000020?
+    - layout_05
+  - - HYP-0631-de200020-xnor32-lsr1-discard-publish
+    - 300
+    - xnor32.lsr1.de200020?
+    - layout_05
+  - - HYP-0632-de400020-xnor32-lsr1-write-preserve
+    - 300
+    - xnor32.lsr1.de400020?
+    - layout_05
+  - - HYP-0633-de600020-xnor32-lsr1-write-publish
+    - 300
+    - xnor32.lsr1.de600020?
+    - layout_05
+  - - HYP-0634-de000028-xnor32-low16-discard-preserve
+    - 300
+    - xnor32.low16.de000028?
+    - layout_05
+  - - HYP-0635-de200028-xnor32-low16-discard-publish
+    - 300
+    - xnor32.low16.de200028?
+    - layout_05
+  - - HYP-0636-de400028-xnor32-low16-write-preserve
+    - 300
+    - xnor32.low16.de400028?
+    - layout_05
+  - - HYP-0637-de600028-xnor32-low16-write-publish
+    - 300
+    - xnor32.low16.de600028?
+    - layout_05
+  - - HYP-0638-de000030-xnor32-bswap-discard-preserve
+    - 300
+    - xnor32.bswap.de000030?
+    - layout_05
+  - - HYP-0639-de200030-xnor32-bswap-discard-publish
+    - 300
+    - xnor32.bswap.de200030?
+    - layout_05
+  - - HYP-0640-de400030-xnor32-bswap-write-preserve
+    - 300
+    - xnor32.bswap.de400030?
+    - layout_05
+  - - HYP-0641-de600030-xnor32-bswap-write-publish
+    - 300
+    - xnor32.bswap.de600030?
+    - layout_05
+  - - HYP-0303-de00-xnor-discard
+    - 265
+    - xnor32.de0038?
+    - layout_02
+  - - HYP-0318-de20-xnor-test
+    - 265
+    - xnor32.de2038?
+    - layout_02
+  - - HYP-0253-de4-xnor
+    - 250
+    - xnor32
+    - layout_03
+  - - HYP-0319-de60-xnor-publish
+    - 265
+    - xnor32.de6038?
+    - layout_03
+conditional_families:
+- mnemonic: and32
+  base_value: 0xd1000000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0602-d1000000-and32-discard-preserve-ifset
+    - 300
+    - and32.select.d1000000?
+    - layout_06
+  - - HYP-0603-d1000001-and32-discard-preserve-ifclear
+    - 300
+    - and32.select.d1000001?
+    - layout_06
+  - - HYP-0604-d1200000-and32-discard-publish-ifset
+    - 300
+    - and32.select.d1200000?
+    - layout_06
+  - - HYP-0605-d1200001-and32-discard-publish-ifclear
+    - 300
+    - and32.select.d1200001?
+    - layout_06
+  - - HYP-0606-d1400000-and32-write-preserve-ifset
+    - 300
+    - and32.select.d1400000?
+    - layout_06
+  - - HYP-0607-d1400001-and32-write-preserve-ifclear
+    - 300
+    - and32.select.d1400001?
+    - layout_06
+  - - HYP-0608-d1600000-and32-write-publish-ifset
+    - 300
+    - and32.select.d1600000?
+    - layout_06
+  - - HYP-0609-d1600001-and32-write-publish-ifclear
+    - 300
+    - and32.select.d1600001?
+    - layout_06
+- mnemonic: or32
+  base_value: 0xd1800000
+  equation: ''
+  description: ''
+  evidence: FHW-362
+  cells:
+  - - HYP-0610-d1800000-or32-discard-preserve-ifset
+    - 300
+    - or32.select.d1800000?
+    - layout_06
+  - - HYP-0611-d1800001-or32-discard-preserve-ifclear
+    - 300
+    - or32.select.d1800001?
+    - layout_06
+  - - HYP-0612-d1a00000-or32-discard-publish-ifset
+    - 300
+    - or32.select.d1a00000?
+    - layout_06
+  - - HYP-0613-d1a00001-or32-discard-publish-ifclear
+    - 300
+    - or32.select.d1a00001?
+    - layout_06
+  - - HYP-0614-d1c00000-or32-write-preserve-ifset
+    - 300
+    - or32.select.d1c00000?
+    - layout_06
+  - - HYP-0615-d1c00001-or32-write-preserve-ifclear
+    - 300
+    - or32.select.d1c00001?
+    - layout_06
+  - - HYP-0616-d1e00000-or32-write-publish-ifset
+    - 300
+    - or32.select.d1e00000?
+    - layout_06
+  - - HYP-0617-d1e00001-or32-write-publish-ifclear
+    - 300
+    - or32.select.d1e00001?
+    - layout_06
+- mnemonic: sub32
+  base_value: 0xd4000000
+  equation: ''
+  description: ''
+  evidence: FHW-359
+  cells:
+  - - HYP-0460-sub-discard-preserve-ifset
+    - 280
+    - sub32.d40000?
+    - layout_01
+  - - HYP-0461-sub-discard-preserve-ifclear
+    - 280
+    - sub32.d40001?
+    - layout_01
+  - - HYP-0462-sub-discard-publish-ifset
+    - 280
+    - sub32.d42000?
+    - layout_01
+  - - HYP-0463-sub-discard-publish-ifclear
+    - 280
+    - sub32.d42001?
+    - layout_01
+  - - HYP-0464-sub-write-preserve-ifset
+    - 280
+    - sub32.d44000?
+    - layout_04
+  - - HYP-0465-sub-write-preserve-ifclear
+    - 280
+    - sub32.d44001?
+    - layout_04
+  - - HYP-0466-sub-write-publish-ifset
+    - 280
+    - sub32.d46000?
+    - layout_04
+  - - HYP-0467-sub-write-publish-ifclear
+    - 280
+    - sub32.d46001?
+    - layout_04
+- mnemonic: andn32
+  base_value: 0xd5000000
+  equation: ''
+  description: ''
+  evidence: FHW-359
+  cells:
+  - - HYP-0468-andn-discard-preserve-ifset
+    - 280
+    - andn32.d50000?
+    - layout_01
+  - - HYP-0469-andn-discard-preserve-ifclear
+    - 280
+    - andn32.d50001?
+    - layout_01
+  - - HYP-0470-andn-discard-publish-ifset
+    - 280
+    - andn32.d52000?
+    - layout_01
+  - - HYP-0471-andn-discard-publish-ifclear
+    - 280
+    - andn32.d52001?
+    - layout_01
+  - - HYP-0472-andn-write-preserve-ifset
+    - 280
+    - andn32.d54000?
+    - layout_04
+  - - HYP-0473-andn-write-preserve-ifclear
+    - 280
+    - andn32.d54001?
+    - layout_04
+  - - HYP-0474-andn-write-publish-ifset
+    - 280
+    - andn32.d56000?
+    - layout_04
+  - - HYP-0475-andn-write-publish-ifclear
+    - 280
+    - andn32.d56001?
+    - layout_04
+- mnemonic: orn32
+  base_value: 0xd5800000
+  equation: ''
+  description: ''
+  evidence: FHW-359
+  cells:
+  - - HYP-0476-orn-discard-preserve-ifset
+    - 280
+    - orn32.d60000?
+    - layout_01
+  - - HYP-0477-orn-discard-preserve-ifclear
+    - 280
+    - orn32.d60001?
+    - layout_01
+  - - HYP-0478-orn-discard-publish-ifset
+    - 280
+    - orn32.d62000?
+    - layout_01
+  - - HYP-0479-orn-discard-publish-ifclear
+    - 280
+    - orn32.d62001?
+    - layout_01
+  - - HYP-0480-orn-write-preserve-ifset
+    - 280
+    - orn32.d64000?
+    - layout_04
+  - - HYP-0481-orn-write-preserve-ifclear
+    - 280
+    - orn32.d64001?
+    - layout_04
+  - - HYP-0482-orn-write-publish-ifset
+    - 280
+    - orn32.d66000?
+    - layout_04
+  - - HYP-0483-orn-write-publish-ifclear
+    - 280
+    - orn32.d66001?
+    - layout_04
+- mnemonic: xnor32
+  base_value: 0xd6000000
+  equation: ''
+  description: ''
+  evidence: FHW-363
+  cells:
+  - - HYP-0722-d6000000-xnor32-discard-preserve-ifset
+    - 300
+    - xnor32.select.d6000000?
+    - layout_06
+  - - HYP-0723-d6000001-xnor32-discard-preserve-ifclear
+    - 300
+    - xnor32.select.d6000001?
+    - layout_06
+  - - HYP-0724-d6200000-xnor32-discard-publish-ifset
+    - 300
+    - xnor32.select.d6200000?
+    - layout_06
+  - - HYP-0725-d6200001-xnor32-discard-publish-ifclear
+    - 300
+    - xnor32.select.d6200001?
+    - layout_06
+  - - HYP-0726-d6400000-xnor32-write-preserve-ifset
+    - 300
+    - xnor32.select.d6400000?
+    - layout_06
+  - - HYP-0727-d6400001-xnor32-write-preserve-ifclear
+    - 300
+    - xnor32.select.d6400001?
+    - layout_06
+  - - HYP-0728-d6600000-xnor32-write-publish-ifset
+    - 300
+    - xnor32.select.d6600000?
+    - layout_06
+  - - HYP-0729-d6600001-xnor32-write-publish-ifclear
+    - 300
+    - xnor32.select.d6600001?
+    - layout_06
+- mnemonic: bset32
+  base_value: 0xd6800000
+  equation: ''
+  description: ''
+  evidence: FHW-364
+  cells:
+  - - HYP-0730-d6800000-bset32-discard-preserve-ifset
+    - 300
+    - bset32.select.d6800000?
+    - layout_00
+  - - HYP-0731-d6800001-bset32-discard-preserve-ifclear
+    - 300
+    - bset32.select.d6800001?
+    - layout_00
+  - - HYP-0732-d6a00000-bset32-discard-publish-ifset
+    - 300
+    - bset32.select.d6a00000?
+    - layout_00
+  - - HYP-0733-d6a00001-bset32-discard-publish-ifclear
+    - 300
+    - bset32.select.d6a00001?
+    - layout_00
+  - - HYP-0734-d6c00000-bset32-write-preserve-ifset
+    - 300
+    - bset32.select.d6c00000?
+    - layout_00
+  - - HYP-0735-d6c00001-bset32-write-preserve-ifclear
+    - 300
+    - bset32.select.d6c00001?
+    - layout_00
+  - - HYP-0736-d6e00000-bset32-write-publish-ifset
+    - 300
+    - bset32.select.d6e00000?
+    - layout_00
+  - - HYP-0737-d6e00001-bset32-write-publish-ifclear
+    - 300
+    - bset32.select.d6e00001?
+    - layout_00
+- mnemonic: not32
+  base_value: 0xd7800000
+  equation: ''
+  description: ''
+  evidence: FHW-359
+  cells:
+  - - HYP-0484-not-discard-preserve-ifset
+    - 280
+    - not32.d70000?
+    - layout_01
+  - - HYP-0485-not-discard-preserve-ifclear
+    - 280
+    - not32.d70001?
+    - layout_01
+  - - HYP-0486-not-discard-publish-ifset
+    - 280
+    - not32.d72000?
+    - layout_01
+  - - HYP-0487-not-discard-publish-ifclear
+    - 280
+    - not32.d72001?
+    - layout_01
+  - - HYP-0488-not-write-preserve-ifset
+    - 280
+    - not32.d74000?
+    - layout_04
+  - - HYP-0489-not-write-preserve-ifclear
+    - 280
+    - not32.d74001?
+    - layout_04
+  - - HYP-0490-not-write-publish-ifset
+    - 280
+    - not32.d76000?
+    - layout_04
+  - - HYP-0491-not-write-publish-ifclear
+    - 280
+    - not32.d76001?
+    - layout_04

@@ -1,0 +1,74 @@
+schema_version: 1
+id: fman-dc-subtraction
+id_prefix: FHW-367-dcsub
+profile: ls1046a-fman
+mnemonic: sub32
+predicate_decorator: borrow
+literal_one_decorator: decrement
+operator: '-'
+operation: ''
+publish_function: publish_subtraction_conditions
+family_description: ''
+base_value: 0xdc000000
+exact_mask: 0xffe0003f
+precedence: 1000
+fields:
+  left:
+    lsb: 16
+    width: 5
+  right:
+    lsb: 11
+    width: 5
+  destination_or_auxiliary:
+    lsb: 6
+    width: 5
+  predicate_borrow_select:
+    bit: 23
+  write_result:
+    bit: 22
+  publish_predicates:
+    bit: 21
+  transform:
+    lsb: 3
+    width: 3
+  constant_borrow_in:
+    bit: 0
+  reserved:
+  - 2
+  - 1
+transforms:
+- selector: 0
+  decorator: bitrev8
+- selector: 1
+  decorator: swap8
+- selector: 2
+  decorator: rol16
+- selector: 3
+  decorator: lsr8
+- selector: 4
+  decorator: lsr1
+- selector: 5
+  decorator: low16
+- selector: 6
+  decorator: bswap
+- selector: 7
+  decorator: null
+evidence:
+  id: ''
+  capture:
+    path: ''
+    sha256: ''
+  plan:
+    path: ''
+    sha256: ''
+  analysis:
+    path: ''
+    sha256: ''
+  cases: 256
+  observable_cases: 192
+  result: ''
+  integrity:
+    iram_restored: true
+    muram_restored: true
+    target_only_change: true
+    native_request_verified: true

@@ -1,0 +1,4158 @@
+schema_version: 1
+name: semantic
+description: Canonical semantic assembly forms. Encoding-specific mnemonics remain in encodings.yaml and the former
+  short display names remain compatibility data; neither is part of this frontend.
+deprecated_mnemonics:
+  bfi32:
+    replacement: bfins32
+    message: bfi32 is deprecated; use bfins32 destination, source, rotate, high_trim, low_bound
+decorators:
+- name: discard
+  kind: behavior
+  description: Compute the operation's result without writing a scalar destination.
+- name: publish
+  kind: behavior
+  description: Replace the documented result predicates from the computed result.
+- name: carry
+  kind: behavior
+  description: Consume predicate p0 as an incoming carry bit; rotate-through-carry forms also produce a new p0 when
+    documented.
+- name: borrow
+  kind: behavior
+  description: Subtract predicate p0 as an incoming borrow without implying predicate publication.
+- name: increment
+  kind: behavior
+  description: Select the encoded constant one as the arithmetic carry-in.
+- name: decrement
+  kind: behavior
+  description: Select the encoded constant one as the arithmetic borrow-in.
+- name: reverse
+  kind: behavior
+  description: Complement a five-bit bit index or shift count, using 31 minus the supplied value modulo 32.
+- name: swap8
+  kind: behavior
+  description: Swap the two bytes within each 16-bit half of the computed result.
+- name: bswap
+  kind: behavior
+  description: Reverse the four bytes of the computed result.
+- name: bitrev8
+  kind: behavior
+  description: Reverse the bit order independently within each result byte.
+- name: rol16
+  kind: behavior
+  description: Rotate the computed result left by 16 bits.
+- name: lsr8
+  kind: behavior
+  description: Shift the computed result right by eight bits.
+- name: lsr1
+  kind: behavior
+  description: Shift the computed result right by one bit.
+- name: low16
+  kind: behavior
+  description: Retain only the low 16 bits of the computed result.
+- name: increment_count
+  kind: behavior
+  description: Add one modulo 32 to the register-supplied rotate count.
+- name: descending
+  kind: behavior
+  description: Traverse the configured source and destination ranges from their endpoints toward lower addresses.
+- name: select
+  kind: behavior
+  description: Select or suppress the operation result according to the named predicate and polarity.
+- name: next
+  kind: behavior
+  description: Execute the following instruction once before completing the control transfer.
+- name: encoding
+  kind: encoding
+  description: Select a behaviorally equivalent or not-yet-distinguished machine encoding for exact binary reproduction.
+- name: raw
+  prefix: true
+  kind: encoding
+  description: Preserve an encoded field whose positive architectural purpose is unresolved or absent.
+forms:
+- id: HYP-0099
+  mnemonic: add32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: source_15_11
+    kind: register
+- id: HYP-0110-d860-add
+  mnemonic: add32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: source_15_11
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0236-residual-d820-test-add
+  mnemonic: add32
+  operands:
+  - lhs
+  - rhs
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0193-d840-add1
+  mnemonic: add32
+  operands:
+  - destination_10_6
+  - left_20_16
+  - right_15_11
+  decorators:
+  - increment
+- id: HYP-0193-d440-copy-low00
+  mnemonic: mov32
+  operands:
+  - destination_10_6
+  - source_20_16
+  decorators:
+  - name: encoding
+    value: d4a
+  - name: raw15_11
+    field: unused_15_11
+    format: integer
+- id: HYP-0193-d440-copy-low02
+  mnemonic: mov32
+  operands:
+  - destination_10_6
+  - source_20_16
+  decorators:
+  - name: encoding
+    value: d4b
+  - name: raw15_11
+    field: unused_15_11
+    format: integer
+- id: HYP-0236-residual-d820-test-add1
+  mnemonic: add32
+  operands:
+  - lhs
+  - rhs
+  decorators:
+  - discard
+  - publish
+  - increment
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0126-dc40-sub
+  mnemonic: sub32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: lhs_20_16
+    kind: register
+  - field: rhs_15_11
+    kind: register
+- id: HYP-0126-dc60-sub
+  mnemonic: sub32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: lhs_20_16
+    kind: register
+  - field: rhs_15_11
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0126-dc20-cmp
+  mnemonic: sub32
+  operands:
+  - field: lhs_20_16
+    kind: register
+  - field: rhs_15_11
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: raw_10_6
+    format: integer
+- id: HYP-0236-residual-dc20-test-sub1
+  mnemonic: sub1
+  operands:
+  - lhs
+  - rhs
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0110-dbc1d-lsri
+  mnemonic: lsr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: shift_u5
+    kind: immediate
+- id: HYP-0110-dbe1d-lsri
+  mnemonic: lsr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: shift_u5
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0236-residual-dba0-test-lsri
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: shift_u5
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0110-dbc3d-lsli
+  mnemonic: lsl32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: shift_u5
+    kind: immediate
+- id: HYP-0236-residual-dba0-test-lsli
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: shift_u5
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0110-dbc3c-lsl
+  mnemonic: lsl32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: count_operand_15_11
+    kind: register
+- id: HYP-0236-residual-dba0-test-lslr
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count_register
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0236-residual-daa0-test-pop-or16
+  mnemonic: popor16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0236-residual-dac0-pop-or16
+  mnemonic: popor16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0236-residual-dae0-pop-or16c
+  mnemonic: popor16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0212-d040-cadd-p-set
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - name: select
+    field: predicate
+    format: predicate
+- id: HYP-0209-d040-cadd-p-clear
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - name: select
+    field: predicate
+    format: predicate
+    negate: true
+- id: HYP-0212-d060-caddc-p-set
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - name: select
+    field: predicate
+    format: predicate
+- id: HYP-0212-d060-caddc-p-clear
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - name: select
+    field: predicate
+    format: predicate
+    negate: true
+- id: HYP-0212-d3c-select-p-set
+  mnemonic: select32
+  operands:
+  - destination
+  - true_source
+  - false_source
+  decorators:
+  - name: select
+    field: predicate
+    format: predicate
+- id: HYP-0212-d3c-select-p-clear
+  mnemonic: select32
+  operands:
+  - destination
+  - true_source
+  - false_source
+  decorators:
+  - name: select
+    field: predicate
+    format: predicate
+    negate: true
+- id: HYP-0236-residual-d3a0-test-select-p1
+  mnemonic: select32
+  operands:
+  - true_source
+  - false_source
+  decorators:
+  - discard
+  - publish
+  - name: select
+    value: p1
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0103-a7
+  mnemonic: call
+  operands:
+  - target_word
+- id: HYP-0103-a3
+  mnemonic: call
+  operands:
+  - target_word
+  decorators:
+  - next
+- id: HYP-0207-afff
+  mnemonic: call
+  document: false
+  operands:
+  - target
+  decorators:
+  - name: encoding
+    value: afff
+- id: HYP-0207-abff
+  mnemonic: call
+  document: false
+  operands:
+  - target
+  decorators:
+  - next
+  - name: encoding
+    value: abff
+- id: HYP-0104-ret
+  mnemonic: ret
+  operands: []
+- id: HYP-0104-ret-comp
+  mnemonic: ret
+  operands: []
+  decorators:
+  - next
+- id: HYP-0065
+  mnemonic: indirect
+  operands:
+  - source_register
+- id: HYP-0069
+  mnemonic: indirect
+  operands:
+  - source_register
+  decorators:
+  - next
+- id: HYP-0076
+  mnemonic: indirect
+  document: false
+  operands:
+  - source_register
+  decorators:
+  - next
+  - name: encoding
+    value: m5
+- id: HYP-0184
+  mnemonic: indirect
+  document: false
+  operands:
+  - source_register
+  decorators:
+  - name: encoding
+    value: m5
+- id: HYP-0085-fman32
+  mnemonic: xfer14
+  operands:
+  - target_word
+- id: HYP-0103-b3
+  mnemonic: xfer14
+  operands:
+  - target_word
+  decorators:
+  - next
+- id: HYP-0077
+  mnemonic: xfer14
+  document: false
+  operands:
+  - target_word
+  decorators:
+  - name: encoding
+    value: b7
+- id: HYP-0179-bfff
+  mnemonic: xfer14
+  document: false
+  operands:
+  - target_word
+  decorators:
+  - name: raw15_14
+    field: raw_15_14
+    format: integer
+- id: HYP-0179-bbff
+  mnemonic: xfer14
+  document: false
+  operands:
+  - target_word
+  decorators:
+  - next
+  - name: raw15_14
+    field: raw_15_14
+    format: integer
+- id: HYP-0207-a4-callbitset
+  mnemonic: callbitset14
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0207-a0-callbitset-comp
+  mnemonic: callbitset14
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0207-ac-callbitclr
+  mnemonic: callbitclr14
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0207-a8-callbitclr-comp
+  mnemonic: callbitclr14
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0208-callind-direct
+  mnemonic: callind
+  operands:
+  - target
+- id: HYP-0142-state-effect-9bff3800
+  mnemonic: callind
+  operands:
+  - target
+  decorators:
+  - next
+- id: HYP-0150-ab-s5-direct-conditional
+  mnemonic: brbitset14
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0153-ab-s4-reference
+  mnemonic: brbitset14
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0150-ab-s7-direct-conditional
+  mnemonic: brbitclr14
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0150-ab-s6-companion-conditional
+  mnemonic: brbitclr14
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0258-brbitset-ind-s4
+  mnemonic: brbitset.ind
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0258-brbitset-ind-comp-s4
+  mnemonic: brbitset.ind
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0258-brbitclr-ind-s4
+  mnemonic: brbitclr.ind
+  operands:
+  - register
+  - bit
+  - target
+- id: HYP-0258-brbitclr-ind-comp-s4
+  mnemonic: brbitclr.ind
+  operands:
+  - register
+  - bit
+  - target
+  decorators:
+  - next
+- id: HYP-0111-b43f-cbrz
+  mnemonic: cbrz14
+  operands:
+  - target_word
+- id: HYP-0125-b03f-cbrz
+  mnemonic: cbrz14
+  operands:
+  - target_word
+  decorators:
+  - next
+- id: HYP-0111-bc3f-cbrnz
+  mnemonic: cbrnz14
+  operands:
+  - target_word
+- id: HYP-0125-b83f-cbrnz
+  mnemonic: cbrnz14
+  operands:
+  - target_word
+  decorators:
+  - next
+- id: HYP-0125-b85f-cbrnn
+  mnemonic: cbrnn14
+  operands:
+  - target_word
+  decorators:
+  - next
+- id: HYP-0177-brctrl0-comp
+  mnemonic: brctrl0
+  operands:
+  - target
+  decorators:
+  - next
+- id: HYP-0177-brnotctrl0-comp
+  mnemonic: brnotctrl0
+  operands:
+  - target
+  decorators:
+  - next
+- id: HYP-0206-970x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 2
+- id: HYP-0205-930x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 2
+  decorators:
+  - next
+- id: HYP-0104-9732
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 4
+- id: HYP-0205-932x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 4
+  decorators:
+  - next
+- id: HYP-0104-974x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 8
+- id: HYP-0205-934x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 8
+  decorators:
+  - next
+- id: HYP-0104-976x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 16
+- id: HYP-0205-936x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 16
+  decorators:
+  - next
+- id: HYP-0203-978x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 32
+- id: HYP-0205-938x
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 32
+  decorators:
+  - next
+- id: HYP-0203-97ax
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 64
+- id: HYP-0205-93ax
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 64
+  decorators:
+  - next
+- id: HYP-0203-97cx
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 128
+- id: HYP-0205-93cx
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 128
+  decorators:
+  - next
+- id: HYP-0203-97ex
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 256
+- id: HYP-0205-93ex
+  mnemonic: jmptbl
+  operands:
+  - index
+  - table_word
+  - literal: 256
+  decorators:
+  - next
+- id: HYP-0039-e84-addi
+  mnemonic: addi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0039-e86-addi
+  mnemonic: addi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0039-e8c-addi
+  mnemonic: addi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - carry
+- id: HYP-0039-e8e-adcic
+  mnemonic: addi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - publish
+  - carry
+- id: HYP-0039-e82-tstaddi
+  mnemonic: addi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0039-e8a-tstadci
+  mnemonic: addi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+  - carry
+- id: HYP-0110-d8c0-add
+  mnemonic: add32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: source_15_11
+    kind: register
+  decorators:
+  - carry
+- id: HYP-0130-e04-addhi
+  mnemonic: addhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0235-dcc-sub
+  mnemonic: sub32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - borrow
+- id: HYP-0248-e14-andhi
+  mnemonic: andhi16
+  operands:
+  - destination
+  - immediate
+- id: HYP-0126-ed40-andhi
+  mnemonic: andnlo16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0136-f02-addlane
+  mnemonic: addlane8
+  operands:
+  - field: destination_15_11
+    kind: register
+  - field: source_20_16
+    kind: register
+  - field: byte_lane_9_8
+    kind: immediate
+  - immediate_u8
+- id: HYP-0136-f03-addlane-condition
+  mnemonic: addlane8
+  operands:
+  - field: destination_15_11
+    kind: register
+  - field: source_20_16
+    kind: register
+  - field: byte_lane_9_8
+    kind: immediate
+  - immediate_u8
+  decorators:
+  - publish
+- id: HYP-0136-f0e-orlane
+  mnemonic: orlane8
+  operands:
+  - field: destination_15_11
+    kind: register
+  - field: source_20_16
+    kind: register
+  - field: byte_lane_9_8
+    kind: immediate
+  - immediate_u8
+- id: HYP-0135-e0b-unknown
+  mnemonic: andhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0134-e09-unknown
+  mnemonic: andhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0136-f0a-andlane
+  mnemonic: andlane8
+  operands:
+  - field: destination_15_11
+    kind: register
+  - field: source_20_16
+    kind: register
+  - field: byte_lane_9_8
+    kind: immediate
+  - immediate_u8
+- id: HYP-0136-f0b-andlane-condition
+  mnemonic: andlane8
+  operands:
+  - field: destination_15_11
+    kind: register
+  - field: source_20_16
+    kind: register
+  - field: byte_lane_9_8
+    kind: immediate
+  - immediate_u8
+  decorators:
+  - publish
+- id: HYP-0139-e54-andnhi
+  mnemonic: andnhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0252-e56-andnhi
+  mnemonic: andnhi16
+  operands:
+  - destination
+  - immediate
+  decorators:
+  - publish
+- id: HYP-0251-e52-testhi
+  mnemonic: andnhi16
+  operands:
+  - source
+  - immediate
+  decorators:
+  - discard
+  - publish
+- id: HYP-0140-f56-andni
+  mnemonic: andni8
+  operands:
+  - destination
+  - source
+  - immediate
+  decorators:
+  - publish
+  - name: raw10_8
+    field: raw_10_8
+    format: integer
+- id: HYP-0200-f54-andnlane
+  mnemonic: andnlane8
+  operands:
+  - destination
+  - source
+  - field: lane
+    kind: immediate
+  - immediate
+- id: HYP-0039-e92-tsti
+  mnemonic: andi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0035
+  mnemonic: andi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0039-e96-andi
+  mnemonic: andi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0039-e96-r0-andz
+  mnemonic: andi16
+  operands:
+  - literal: r0
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0039-ea2-cmpi
+  mnemonic: xori16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0039-ea6-xoric
+  mnemonic: xori16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0126-ec20-cmpi
+  mnemonic: subi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0126-ec60-subi
+  mnemonic: subi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0126-ec40-subi
+  mnemonic: subi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0236-residual-e420-test-subhi
+  mnemonic: subhi16
+  operands:
+  - lhs
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0140-f46-subi
+  mnemonic: sublane8
+  operands:
+  - destination
+  - source
+  - field: lane
+    kind: immediate
+  - immediate_u8
+  decorators:
+  - publish
+- id: HYP-0199-f42-sublane
+  mnemonic: sublane8
+  operands:
+  - destination
+  - source
+  - field: lane
+    kind: immediate
+  - immediate_u8
+- id: HYP-0172-f4-cmpi8-lane
+  mnemonic: sublane8
+  operands:
+  - source
+  - field: lane
+    kind: immediate
+  - immediate_u8
+  decorators:
+  - discard
+  - publish
+  - name: raw15_11
+    field: auxiliary_register_field
+    format: integer
+- id: HYP-0193-dc40-sub1
+  mnemonic: sub1
+  operands:
+  - destination_10_6
+  - left_20_16
+  - right_15_11
+- id: HYP-0139-e44-subhi
+  mnemonic: subhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0039-e9e-oric
+  mnemonic: ori16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0039-e9a-tstori
+  mnemonic: ori16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+- id: HYP-0034
+  mnemonic: ori16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0039-ea4-xori
+  mnemonic: xori16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0130-e1c-orhi
+  mnemonic: orhi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0038
+  mnemonic: lihi16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0126-efc0-lihi
+  mnemonic: linv16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: HYP-0106-eb6
+  mnemonic: li16
+  operands:
+  - field: operand_20_16
+    kind: register
+  - immediate_u16
+- id: FHW-014
+  mnemonic: li24
+  operands:
+  - literal: r30
+  - immediate_u24
+- id: HYP-0249-e7c-load-inverted-high
+  mnemonic: linvhi16
+  operands:
+  - destination
+  - immediate
+- id: HYP-0164-d2df-const00400000-r1-exact
+  mnemonic: li32
+  operands:
+  - literal: r1
+  - literal: '0x00400000'
+- id: HYP-0173-d9ff-test-r2
+  mnemonic: test32
+  operands:
+  - literal: r2
+  decorators:
+  - discard
+  - publish
+- id: HYP-0039-eba-tstimmi
+  mnemonic: testi16
+  operands:
+  - immediate_u16
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: register
+    format: integer
+- id: HYP-0193-dddf-not
+  mnemonic: not32
+  operands:
+  - destination_10_6
+  - source_15_11
+- id: HYP-0126-ee40-not
+  mnemonic: not32
+  operands:
+  - field: operand_20_16
+    kind: register
+- id: HYP-0201-f64-not
+  mnemonic: not32
+  document: false
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: encoding
+    value: f64
+- id: HYP-0236-residual-dba0-test-ror33i
+  mnemonic: ror32
+  operands:
+  - source
+  - shift_u5
+  decorators:
+  - discard
+  - publish
+  - carry
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0110-dbc14-asr
+  mnemonic: asr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: count_operand_15_11
+    kind: register
+- id: HYP-0110-dbc15-asri
+  mnemonic: asr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: shift_u5
+    kind: immediate
+- id: HYP-0110-dbc1c-lsr
+  mnemonic: lsr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: count_operand_15_11
+    kind: register
+- id: HYP-0110-db40-bclr
+  mnemonic: bclr32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: index_operand_15_11
+    kind: register
+- id: HYP-0193-df40-bclr-rev
+  mnemonic: bclr32
+  operands:
+  - destination_10_6
+  - source_20_16
+  - index_register_15_11
+  decorators:
+  - reverse
+- id: HYP-0110-dac0-bset
+  mnemonic: bset32
+  operands:
+  - field: result_10_6
+    kind: register
+  - field: operand_20_16
+    kind: register
+  - field: index_operand_15_11
+    kind: register
+- id: HYP-0254-dec-bset-reverse
+  mnemonic: bset32
+  operands:
+  - destination
+  - value
+  - index
+  decorators:
+  - reverse
+- id: HYP-0237-db60-low3f
+  mnemonic: clzclear32
+  operands:
+  - source_remainder
+  - scaled_count
+  decorators:
+  - publish
+  - name: raw20_16
+    field: raw_20_16
+    format: integer
+- id: HYP-0250-dbe-transform-low15
+  mnemonic: asr32
+  operands:
+  - destination
+  - source
+  - field: shift_u5
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0240-control86-low1b
+  mnemonic: xorrol3
+  operands:
+  - destination
+  - source
+  - auxiliary
+- id: HYP-0256-f5c-low300
+  mnemonic: li32ones
+  operands:
+  - destination
+  decorators:
+  - name: raw20_16
+    field: raw_20_16
+    format: integer
+- id: HYP-0193-db5f-clz
+  mnemonic: clz32
+  operands:
+  - destination_10_6
+  - source_15_11
+- id: HYP-0202-fa7-bfi1-s24-d8
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 24
+  - literal: 8
+  - literal: 1
+- id: HYP-0202-fa1-bfi1-s8-d14
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 8
+  - literal: 14
+  - literal: 1
+- id: HYP-0202-f80-bfi12-s0-d20
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 20
+  - literal: 12
+- id: HYP-0202-fa0-bfi16-s8-d0
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 8
+  - literal: 0
+  - literal: 16
+- id: HYP-0202-f8c-bfi20-s0-d0
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 0
+  - literal: 20
+- id: HYP-0202-f88-bfi8-s0-d16
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 16
+  - literal: 8
+- id: HYP-0202-f84-bfi8-s0-d20
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 20
+  - literal: 8
+- id: HYP-0202-f80-bfi8-s0-d24
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 24
+  - literal: 8
+- id: HYP-0202-fa0-bfi8-s24-d8
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 24
+  - literal: 8
+  - literal: 8
+- id: HYP-0202-f83-bfi9-s0-d20
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 20
+  - literal: 9
+- id: HYP-0202-f80-bfii3-s1-d29
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - literal: -1
+  - literal: 29
+  - literal: 3
+- id: HYP-0202-f80-bfii8-shl4-d24
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - literal: 4
+  - literal: 24
+  - literal: 8
+- id: HYP-0202-f83-bfii9-shl4-d20
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - literal: 4
+  - literal: 20
+  - literal: 9
+- id: HYP-0185-fb-s7-041
+  mnemonic: bclr32
+  operands:
+  - destination
+  - literal: 0
+- id: HYP-0183-fb-s6-043
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 1
+  - literal: 1
+- id: HYP-0185-fb-s5-045
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 2
+  - literal: 1
+- id: HYP-0183-fb-s4-047
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 3
+  - literal: 1
+- id: HYP-0183-fb-s3-049
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 4
+  - literal: 1
+- id: HYP-0183-fb-s2-04b
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 5
+  - literal: 1
+- id: HYP-0183-fb-s1-08d
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 6
+  - literal: 1
+- id: HYP-0183-fb-s0-0cf
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: bit_value
+    kind: immediate
+  - literal: 0
+  - literal: 7
+  - literal: 1
+- id: HYP-0183-fb-s0-108
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 4
+  - literal: 4
+- id: HYP-0183-fb-s4-700
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 4
+  - literal: 0
+  - literal: 4
+- id: HYP-0183-fb-s0-008
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 4
+  - literal: 4
+  - literal: 4
+- id: HYP-0183-fb-s1-084
+  mnemonic: bfi32
+  operands:
+  - destination
+  - source
+  - literal: 0
+  - literal: 2
+  - literal: 5
+- id: HYP-0145-fb18-setlo8
+  mnemonic: bfi32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - literal: 1
+  - literal: 0
+  - literal: 8
+- id: HYP-0145-fb1e-insert2
+  mnemonic: bfi32
+  operands:
+  - destination_operand_15_11
+  - source_operand_20_16
+  - literal: 16
+  - literal: 0
+  - literal: 2
+- id: HYP-0144-fb1d-insert3
+  mnemonic: bfi32
+  operands:
+  - destination_operand_15_11
+  - source_operand_20_16
+  - literal: 16
+  - literal: 0
+  - literal: 3
+- id: HYP-0145-fb18-insert6
+  mnemonic: bfi32
+  operands:
+  - destination_operand_15_11
+  - source_operand_20_16
+  - literal: 18
+  - literal: 2
+  - literal: 6
+- id: HYP-0144-fb18-wrap10
+  mnemonic: bfi32
+  operands:
+  - destination_operand_15_11
+  - source_operand_20_16
+  - literal: 14
+  - literal: 30
+  - literal: 10
+- id: HYP-0170-c8cb-merge8
+  mnemonic: merge8
+  operands:
+  - destination
+  - high24_source
+  - low8_source
+- id: HYP-0748-c8cb-merge32
+  mnemonic: merge32
+  operands:
+  - destination
+  - source_a
+  - source_b
+  - high_trim
+  - low_bound
+- id: HYP-0210-bfins32-register
+  mnemonic: bfins32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0210-bfinsi32-immediate
+  mnemonic: bfins32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0146-cccf-bitfield-transform
+  mnemonic: rotmask32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0213-cccf-register-rotate-mask
+  mnemonic: rotmask32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate_register
+    kind: register
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0255-dfc-copy
+  mnemonic: lsr32
+  operands:
+  - destination
+  - source
+  - count
+  decorators:
+  - reverse
+- id: HYP-0274-task-info-set-low14
+  mnemonic: task.info.set_low14
+  operands:
+  - source
+  - auxiliary
+- id: HYP-0275-unit16-mode12-arm
+  mnemonic: scan32.set_mask
+  operands:
+  - source
+  - auxiliary
+- id: HYP-0276-unit16-mode12-config
+  mnemonic: unit16.f2.op31?
+  operands:
+  - source
+  - auxiliary
+- id: HYP-0277-frame-next-nia
+  mnemonic: frame.next_nia
+  operands:
+  - destination
+- id: HYP-0278-unit16-mode12-status
+  mnemonic: scan32.get_result
+  operands:
+  - destination
+- id: HYP-0279-csumcopy-getdst
+  mnemonic: csumcopy.getdst
+  operands:
+  - destination
+- id: HYP-0163-csum-setup-6f60
+  mnemonic: csum.setup
+  operands: []
+- id: HYP-0232-csum-setup-rev-6fe0
+  mnemonic: csum.setup
+  operands: []
+  decorators:
+  - descending
+- id: HYP-0188-csum-accum-mode24
+  mnemonic: csumcopy.accum
+  operands:
+  - range
+  - frame_address
+  - byte_offset
+- id: HYP-0188-csum-accum-mode56
+  mnemonic: csumcopy.accum.fixed
+  operands:
+  - encoded_length
+  - frame_address
+  - byte_offset
+- id: HYP-0280-csum-crc32-accum
+  mnemonic: csum.crc32.accum
+  operands:
+  - range
+  - frame_address
+  - byte_offset
+- id: HYP-0281-unit16-mode12
+  mnemonic: scan32
+  operands:
+  - set_end
+  - set_base
+- id: HYP-0282-dma-read1-510
+  mnemonic: dma.read
+  operands:
+  - external_address_pair
+  - muram_destination
+  - literal: 1
+- id: HYP-0288-dma-write1-512
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 1
+- id: HYP-0289-task-pram-base-stage
+  mnemonic: task.pram_base.stage
+  operands:
+  - source
+  decorators:
+  - name: raw15_11
+    field: auxiliary
+    format: integer
+- id: HYP-0290-task-port-id-stage
+  mnemonic: task.port_id.stage
+  operands:
+  - source
+  decorators:
+  - name: raw15_11
+    field: auxiliary
+    format: integer
+- id: HYP-0291-task-info-set-context
+  mnemonic: task.info.set_context
+  operands:
+  - source
+  decorators:
+  - name: raw15_11
+    field: auxiliary
+    format: integer
+- id: HYP-0239-task-complete-cont
+  mnemonic: task.complete_cont
+  operands:
+  - source
+- id: HYP-0283-dma-write2-522-low00c
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 2
+  decorators:
+  - name: encoding
+    value: low00c
+- id: HYP-0284-dma-write4-532-low104
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 4
+- id: HYP-0285-dma-writen-552-low020
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: configured
+  decorators:
+  - name: encoding
+    value: low020
+- id: HYP-0286-dma-read256-558-low100
+  mnemonic: dma.read
+  operands:
+  - external_address_pair
+  - muram_destination
+  - literal: 256
+  decorators:
+  - name: encoding
+    value: low100
+- id: HYP-0287-dma-write32-56a
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 32
+- id: HYP-0141-dma-read8-540
+  mnemonic: dma.read
+  operands:
+  - external_address_pair
+  - muram_base
+  - literal: 8
+  - displacement
+- id: HYP-0141-dma-read64-550
+  mnemonic: dma.read
+  operands:
+  - external_address_pair
+  - muram_destination
+  - literal: configured
+- id: HYP-0141-dma-write64-552
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: configured
+- id: HYP-0141-dma-read256-558
+  mnemonic: dma.read
+  operands:
+  - external_address_pair
+  - muram_destination
+  - literal: 256
+- id: HYP-0141-dma-write2-522
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 2
+- id: HYP-0141-dma-write64-5d2
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: configured
+  decorators:
+  - name: encoding
+    value: 5d2
+- id: HYP-0160-dma-special-55a2
+  mnemonic: dma.write
+  operands:
+  - external_address_pair
+  - muram_source
+  - literal: 256
+- id: HYP-0141-dma-status64-5d0
+  mnemonic: dma.status
+  operands:
+  - external_address_pair
+  - muram_base
+  - displacement
+- id: HYP-0241-lifecycle-companion-791cfa00
+  mnemonic: task.lifecycle.finish
+  operands: []
+- id: HYP-0259-dma-count-immediate
+  mnemonic: dma.count
+  operands:
+  - byte_count
+- id: HYP-0191-unit20-dma-count
+  mnemonic: dma.count
+  operands:
+  - count
+  decorators:
+  - name: raw20_16
+    field: aux
+    format: integer
+- id: HYP-0191-unit20-dma-count-alias
+  mnemonic: dma.count
+  document: false
+  operands:
+  - count
+  decorators:
+  - name: encoding
+    value: alias
+  - name: raw20_16
+    field: aux
+    format: integer
+- id: HYP-0260-task-order-immediate
+  mnemonic: task.order.mode
+  operands:
+  - state
+- id: HYP-0192-unit4-f1-write0-op7
+  mnemonic: task.order.set
+  operands:
+  - source
+  decorators:
+  - name: encoding
+    value: op7
+  - name: raw20_16
+    field: aux
+    format: integer
+- id: HYP-0192-unit4-f1-write0-op31
+  mnemonic: task.order.set
+  operands:
+  - source
+  decorators:
+  - name: encoding
+    value: op31
+  - name: raw20_16
+    field: aux
+    format: integer
+- id: HYP-0192-unit4-f1-read0
+  mnemonic: task.order.read
+  operands:
+  - destination
+- id: HYP-0292-d800-add-discard
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0293-d800-add1-discard
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - increment
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0297-da80-bset-discard
+  mnemonic: bset32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0298-db00-bclr-discard
+  mnemonic: bclr32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0299-dc00-sub-discard
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0300-dc00-sub1-discard
+  mnemonic: sub1
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0304-de80-bset-reverse-discard
+  mnemonic: bset32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0305-df00-bclr-reverse-discard
+  mnemonic: bclr32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0306-d860-add1-publish
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - increment
+- id: HYP-0309-daa0-bset-test
+  mnemonic: bset32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0310-dae0-bset-publish
+  mnemonic: bset32
+  operands:
+  - destination
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0311-db20-bclr-test
+  mnemonic: bclr32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0312-db60-bclr-publish
+  mnemonic: bclr32
+  operands:
+  - destination
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0313-dc60-sub1-publish
+  mnemonic: sub1
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+- id: HYP-0320-dea0-bset-reverse-test
+  mnemonic: bset32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0321-dee0-bset-reverse-publish
+  mnemonic: bset32
+  operands:
+  - destination
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - publish
+  - reverse
+- id: HYP-0322-df20-bclr-reverse-test
+  mnemonic: bclr32
+  operands:
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0323-df60-bclr-reverse-publish
+  mnemonic: bclr32
+  operands:
+  - destination
+  - left
+  - field: right
+    kind: register
+  decorators:
+  - publish
+  - reverse
+- id: HYP-0324-d800-add-swap8-discard
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - swap8
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0325-d880-adc-discard
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - carry
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0334-da80-popcnt8-discard
+  mnemonic: popcnt8
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0335-da80-popcnt16-discard
+  mnemonic: popcnt16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0336-da80-popcnthi16-discard
+  mnemonic: popcnthi16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0337-db00-clz4-low8-discard
+  mnemonic: clz4.low8
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0338-db00-clz4-low16-discard
+  mnemonic: clz4.low16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0339-db00-clz4-high16-discard
+  mnemonic: clz4.high16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0340-db00-clz4-discard
+  mnemonic: clz4
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0341-db80-ror33i-discard
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - carry
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0342-db80-ror-discard
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0343-db80-rori-discard
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0344-db80-asr-discard
+  mnemonic: asr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0345-db80-asri-discard
+  mnemonic: asr32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0346-db80-lsr-discard
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0347-db80-lsri-discard
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0348-db80-rol-discard
+  mnemonic: rol32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0349-db80-roli-discard
+  mnemonic: rol32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0350-db80-lsli35-discard
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: encoding
+    value: low35
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0351-db80-lsl-discard
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0352-db80-lsli-discard
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0355-de80-popcntz16-discard
+  mnemonic: popcntz16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0356-de80-popcntzhi16-discard
+  mnemonic: popcntzhi16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0357-df00-clznot4-discard
+  mnemonic: clznot4
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0358-df80-ror-revcount-discard
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - increment_count
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0359-df80-lsl-revcount-discard
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0360-d840-add-swap8
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - swap8
+- id: HYP-0361-d860-add-swap8-publish
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - swap8
+- id: HYP-0362-d8e0-adc-publish
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - carry
+- id: HYP-0377-dac0-popcnt8
+  mnemonic: popcnt8
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0378-dac0-popcnt16
+  mnemonic: popcnt16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0379-dac0-popcnthi16
+  mnemonic: popcnthi16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0380-db40-clz4-low16
+  mnemonic: clz4.low16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0381-db60-clz4-low8-publish
+  mnemonic: clz4.low8
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0382-db60-clz4-high16-publish
+  mnemonic: clz4.high16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0383-db60-clz4-publish
+  mnemonic: clz4
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0384-dbc0-ror
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+- id: HYP-0385-dbc0-rori
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+- id: HYP-0386-dbc0-rol
+  mnemonic: rol32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+- id: HYP-0387-dbc0-roli
+  mnemonic: rol32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+- id: HYP-0388-dbc0-lsli35
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - name: encoding
+    value: low35
+- id: HYP-0389-dbe0-ror33i-publish
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - publish
+  - carry
+- id: HYP-0390-dbe0-lsr-publish
+  mnemonic: lsr32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0391-dbe0-roli-publish
+  mnemonic: rol32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0392-dbe0-lsl-publish
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0393-dbe0-lsli-publish
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0396-dec0-popcntz16
+  mnemonic: popcntz16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0397-dec0-popcntzhi16
+  mnemonic: popcntzhi16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0398-df40-clznot4
+  mnemonic: clznot4
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0399-df60-clznot4-publish
+  mnemonic: clznot4
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0400-dfc0-ror-revcount
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - increment_count
+- id: HYP-0401-dfc0-lsl-revcount
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - reverse
+- id: HYP-0402-dfe0-ror-revcount-publish
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+  - increment_count
+- id: HYP-0403-dfe0-lsl-revcount-publish
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+  - reverse
+- id: HYP-0410-e460-subhi-publish
+  mnemonic: subhi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - publish
+- id: HYP-0411-f660-xnor-lane3-fc
+  mnemonic: xnorlane8
+  operands:
+  - destination
+  - source
+  - literal: 3
+  - literal: 252
+- id: HYP-0412-axis-d8200008
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - swap8
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0413-axis-d8800008
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - carry
+  - swap8
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0414-axis-d8800039
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - carry
+  - name: encoding
+    value: low39
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0415-axis-d8a00008
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - carry
+  - swap8
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0416-axis-d8a00038
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - carry
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0417-axis-d8a00039
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - carry
+  - name: encoding
+    value: low39
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0418-axis-d8c00008
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - carry
+  - swap8
+- id: HYP-0419-axis-d8e00008
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - carry
+  - swap8
+- id: HYP-0429-axis-da80003d
+  mnemonic: popor16
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0430-axis-daa00005
+  mnemonic: popcnt8
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0431-axis-daa0000d
+  mnemonic: popcnt16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0432-axis-daa00031
+  mnemonic: popcnthi16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0433-axis-dae00005
+  mnemonic: popcnt8
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0434-axis-dae0000d
+  mnemonic: popcnt16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0435-axis-dae00031
+  mnemonic: popcnthi16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0436-axis-db00003f
+  mnemonic: clzclear32
+  operands:
+  - source
+  decorators:
+  - discard
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0437-axis-db200005
+  mnemonic: clz4.low8
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0438-axis-db20000d
+  mnemonic: clz4.low16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0439-axis-db200021
+  mnemonic: clz4.high16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0440-axis-db20003d
+  mnemonic: clz4
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0441-axis-db20003f
+  mnemonic: clzclear32
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0442-axis-db400021
+  mnemonic: clz4.high16
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0443-axis-db40003d
+  mnemonic: clz4
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0444-axis-db40003f
+  mnemonic: clzclear32
+  operands:
+  - source
+  - destination
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0445-axis-dba0000c
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0446-axis-dba0000d
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0447-axis-dba00014
+  mnemonic: asr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0448-axis-dba00015
+  mnemonic: asr32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0449-axis-dba0001c
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0450-axis-dba0002c
+  mnemonic: rol32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0451-axis-dba0002d
+  mnemonic: rol32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0452-axis-dba00035
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: encoding
+    value: low35
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0453-axis-dbc00009
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - carry
+- id: HYP-0454-axis-dbe0000c
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0455-axis-dbe0000d
+  mnemonic: ror32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0456-axis-dbe00014
+  mnemonic: asr32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0457-axis-dbe0002c
+  mnemonic: rol32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+- id: HYP-0458-axis-dbe00035
+  mnemonic: lsl32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: immediate
+  decorators:
+  - publish
+  - name: encoding
+    value: low35
+- id: HYP-0492-bset-discard-preserve
+  mnemonic: bset32
+  operands:
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary
+    format: integer
+- id: HYP-0493-bset-discard-publish
+  mnemonic: bset32
+  operands:
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary
+    format: integer
+- id: HYP-0494-bset-write-preserve
+  mnemonic: bset32
+  operands:
+  - destination
+  - source
+  - field: bit_index
+    kind: immediate
+- id: HYP-0495-bset-write-publish
+  mnemonic: bset32
+  operands:
+  - destination
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0496-bclr-discard-preserve
+  mnemonic: bclr32
+  operands:
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - discard
+  - name: raw10_6
+    field: auxiliary
+    format: integer
+- id: HYP-0497-bclr-discard-publish
+  mnemonic: bclr32
+  operands:
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - discard
+  - publish
+  - name: raw10_6
+    field: auxiliary
+    format: integer
+- id: HYP-0498-bclr-write-preserve
+  mnemonic: bclr32
+  operands:
+  - destination
+  - source
+  - field: bit_index
+    kind: immediate
+- id: HYP-0499-bclr-write-publish
+  mnemonic: bclr32
+  operands:
+  - destination
+  - source
+  - field: bit_index
+    kind: immediate
+  decorators:
+  - publish
+- id: HYP-0500-dc80-sub-borrow-low39-discard
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - borrow
+  - name: encoding
+    value: low39
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0501-dca0-sub-borrow-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - borrow
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0502-dca0-sub-borrow-low39-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - borrow
+  - name: encoding
+    value: low39
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0503-dcc0-sub-borrow-low39
+  mnemonic: sub32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - borrow
+  - name: encoding
+    value: low39
+- id: HYP-0504-dce0-sub-borrow-publish
+  mnemonic: sub32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - borrow
+- id: HYP-0505-dce0-sub-borrow-low39-publish
+  mnemonic: sub32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - borrow
+  - name: encoding
+    value: low39
+- id: HYP-0510-dea0-popcntz16-discard-publish
+  mnemonic: popcntz16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0511-dea0-popcntzhi16-discard-publish
+  mnemonic: popcntzhi16
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0512-dee0-popcntz16-publish
+  mnemonic: popcntz16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0513-dee0-popcntzhi16-publish
+  mnemonic: popcntzhi16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0514-df20-clznot4-discard-publish
+  mnemonic: clznot4
+  operands:
+  - source
+  decorators:
+  - discard
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0515-df80-lsr-reverse-discard
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0516-dfa0-lsr-reverse-discard-publish
+  mnemonic: lsr32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0517-dfa0-ror-increment-discard-publish
+  mnemonic: ror32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - increment_count
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0518-dfa0-lsl-reverse-discard-publish
+  mnemonic: lsl32
+  operands:
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - discard
+  - publish
+  - reverse
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0519-dfe0-lsr-reverse-publish
+  mnemonic: lsr32
+  operands:
+  - destination
+  - source
+  - field: count
+    kind: register
+  decorators:
+  - publish
+  - reverse
+- id: HYP-0520-e100-andhi16-discard
+  mnemonic: andhi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0521-e400-subhi16-discard
+  mnemonic: subhi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0522-e500-andnhi16-discard
+  mnemonic: andnhi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0523-ec00-subi16-discard
+  mnemonic: subi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0524-f400-sublane8-discard
+  mnemonic: sublane8
+  operands:
+  - source
+  - field: lane
+    kind: immediate
+  - immediate_u8
+  decorators:
+  - discard
+  - name: raw15_11
+    field: auxiliary_register
+    format: integer
+- id: HYP-0039-e80-transparent
+  mnemonic: addi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0039-e88-transparent
+  mnemonic: addi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+  - carry
+- id: HYP-0039-e90-transparent
+  mnemonic: andi16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0039-e98-transparent
+  mnemonic: ori16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0039-ea0-transparent
+  mnemonic: xori16
+  operands:
+  - register
+  - immediate_u16
+  decorators:
+  - discard
+- id: HYP-0670-d8000000-add32-bitrev8-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - bitrev8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0671-d8200000-add32-bitrev8-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - bitrev8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0672-d8400000-add32-bitrev8-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - bitrev8
+- id: HYP-0673-d8600000-add32-bitrev8-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - bitrev8
+- id: HYP-0674-d8000010-add32-rol16-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - rol16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0675-d8200010-add32-rol16-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - rol16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0676-d8400010-add32-rol16-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - rol16
+- id: HYP-0677-d8600010-add32-rol16-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - rol16
+- id: HYP-0678-d8000018-add32-lsr8-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - lsr8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0679-d8200018-add32-lsr8-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - lsr8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0680-d8400018-add32-lsr8-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - lsr8
+- id: HYP-0681-d8600018-add32-lsr8-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - lsr8
+- id: HYP-0682-d8000020-add32-lsr1-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - lsr1
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0683-d8200020-add32-lsr1-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - lsr1
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0684-d8400020-add32-lsr1-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - lsr1
+- id: HYP-0685-d8600020-add32-lsr1-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - lsr1
+- id: HYP-0686-d8000028-add32-low16-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - low16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0687-d8200028-add32-low16-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - low16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0688-d8400028-add32-low16-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - low16
+- id: HYP-0689-d8600028-add32-low16-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - low16
+- id: HYP-0690-d8000030-add32-bswap-discard-preserve
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - bswap
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0691-d8200030-add32-bswap-discard-publish
+  mnemonic: add32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - bswap
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0692-d8400030-add32-bswap-write-preserve
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - bswap
+- id: HYP-0693-d8600030-add32-bswap-write-publish
+  mnemonic: add32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - bswap
+- id: HYP-0694-dc000000-sub32-bitrev8-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - bitrev8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0695-dc200000-sub32-bitrev8-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - bitrev8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0696-dc400000-sub32-bitrev8-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - bitrev8
+- id: HYP-0697-dc600000-sub32-bitrev8-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - bitrev8
+- id: HYP-0698-dc000008-sub32-swap8-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - swap8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0699-dc200008-sub32-swap8-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - swap8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0700-dc400008-sub32-swap8-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - swap8
+- id: HYP-0701-dc600008-sub32-swap8-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - swap8
+- id: HYP-0702-dc000010-sub32-rol16-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - rol16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0703-dc200010-sub32-rol16-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - rol16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0704-dc400010-sub32-rol16-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - rol16
+- id: HYP-0705-dc600010-sub32-rol16-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - rol16
+- id: HYP-0706-dc000018-sub32-lsr8-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - lsr8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0707-dc200018-sub32-lsr8-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - lsr8
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0708-dc400018-sub32-lsr8-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - lsr8
+- id: HYP-0709-dc600018-sub32-lsr8-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - lsr8
+- id: HYP-0710-dc000020-sub32-lsr1-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - lsr1
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0711-dc200020-sub32-lsr1-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - lsr1
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0712-dc400020-sub32-lsr1-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - lsr1
+- id: HYP-0713-dc600020-sub32-lsr1-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - lsr1
+- id: HYP-0714-dc000028-sub32-low16-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - low16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0715-dc200028-sub32-low16-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - low16
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0716-dc400028-sub32-low16-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - low16
+- id: HYP-0717-dc600028-sub32-low16-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - low16
+- id: HYP-0718-dc000030-sub32-bswap-discard-preserve
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - bswap
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0719-dc200030-sub32-bswap-discard-publish
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - publish
+  - bswap
+  - name: raw10_6
+    field: result_or_auxiliary
+    format: integer
+- id: HYP-0720-dc400030-sub32-bswap-write-preserve
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - bswap
+- id: HYP-0721-dc600030-sub32-bswap-write-publish
+  mnemonic: sub32
+  operands:
+  - field: result_or_auxiliary
+    kind: register
+  - left
+  - right
+  decorators:
+  - publish
+  - bswap
+- id: HYP-0738-d8c00039-add-carry-low39
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - carry
+  - name: encoding
+    value: low39
+- id: HYP-0739-d8e00039-add-carry-low39-publish
+  mnemonic: add32
+  operands:
+  - destination
+  - left
+  - right
+  decorators:
+  - publish
+  - carry
+  - name: encoding
+    value: low39
+- id: HYP-0740-db400005-clz4-low8
+  mnemonic: clz4.low8
+  operands:
+  - destination
+  - source
+  decorators:
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0741-db60000d-clz4-low16-publish
+  mnemonic: clz4.low16
+  operands:
+  - destination
+  - source
+  decorators:
+  - publish
+  - name: raw20_16
+    field: unused_20_16
+    format: integer
+- id: HYP-0742-dc800038-sub-borrow-discard
+  mnemonic: sub32
+  operands:
+  - left
+  - right
+  decorators:
+  - discard
+  - borrow
+  - name: raw10_6
+    field: auxiliary_10_6
+    format: integer
+- id: HYP-0751-8487-rotxor
+  mnemonic: rotxor32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0751-8487-rotxorn
+  mnemonic: rotxorn32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0751-888b-rotbic
+  mnemonic: rotbic32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0751-888b-rotand
+  mnemonic: rotand32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0751-8c8f-rotor
+  mnemonic: rotor32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0751-8c8f-rotorn
+  mnemonic: rotorn32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0752-fcff-bfinsn-register
+  mnemonic: bfinsn32
+  operands:
+  - field: destination
+    kind: register
+  - field: source
+    kind: register
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0752-fcff-bfinsni-immediate
+  mnemonic: bfinsn32
+  operands:
+  - field: destination
+    kind: register
+  - field: immediate5
+    kind: immediate
+  - field: rotate
+    kind: immediate
+  - field: high_trim
+    kind: immediate
+  - field: low_bound
+    kind: immediate
+- id: HYP-0753-c0-lea16-low
+  mnemonic: lea16.lo
+  operands:
+  - destination
+  - offset
+  decorators:
+  - name: raw23_21
+    field: ignored_23_21
+    format: integer
+- id: HYP-0753-c4-lea24
+  mnemonic: lea24
+  operands:
+  - destination
+  - offset
+  decorators:
+  - name: raw23_21
+    field: ignored_23_21
+    format: integer
+- id: HYP-0753-c5-lea24-clear15
+  mnemonic: lea24.c5
+  operands:
+  - destination
+  - offset
+  decorators:
+  - name: raw23_21
+    field: ignored_23_21
+    format: integer
+- id: HYP-0755-accum-select
+  mnemonic: csum.accum.sel
+  operands:
+  - crc_select
+  - bit_reverse
+  - range
+  - address
+  - offset
+- id: HYP-0755-accum-copy-select
+  mnemonic: csum.accum24.sel
+  operands:
+  - crc_select
+  - bit_reverse
+  - range
+  - frame_address
+  - byte_offset
+- id: HYP-0755-accum-fixed-select
+  mnemonic: csum.fixed.sel
+  operands:
+  - crc_select
+  - bit_reverse
+  - encoded_length
+  - address
+  - offset
+- id: HYP-0755-accum-fixed-copy-select
+  mnemonic: csum.accum.fixed.sel
+  operands:
+  - crc_select
+  - bit_reverse
+  - encoded_length
+  - frame_address
+  - byte_offset
+- id: HYP-0755-search-eq
+  mnemonic: search.eq
+  operands:
+  - width_select
+  - exact
+  - end
+  - base
+- id: HYP-0755-search-minmax
+  mnemonic: search.minmax
+  operands:
+  - width_select
+  - maximum
+  - end
+  - base
+- id: HYP-0755-search-eq-fixed
+  mnemonic: search.eq.fixed
+  operands:
+  - width_select
+  - exact
+  - encoded_length
+  - base
+- id: HYP-0755-search-minmax-fixed
+  mnemonic: search.minmax.fixed
+  operands:
+  - width_select
+  - maximum
+  - encoded_length
+  - base
+- id: HYP-0756-xor16-result
+  mnemonic: xor16.result
+  operands:
+  - destination
+- id: HYP-0756-cmpflags-result
+  mnemonic: cmpflags.result
+  operands:
+  - destination
+- id: HYP-0756-search-value
+  mnemonic: search.value
+  operands:
+  - destination
+- id: HYP-0756-xor16-set
+  mnemonic: xor16.set
+  operands:
+  - source

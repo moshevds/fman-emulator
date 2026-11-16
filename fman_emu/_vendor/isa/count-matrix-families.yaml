@@ -1,0 +1,77 @@
+schema_version: 1
+description: ''
+evidence:
+  FHW-357: ''
+  FHW-358: ''
+  FHW-360: ''
+  FHW-365: ''
+families:
+- mnemonic: clz4.low16
+  base_value: 0xdb00000d
+  expression: ''
+  publish_expression: ''
+  description: ''
+  predicate_note: ''
+  cells:
+  - - HYP-0338-db00-clz4-low16-discard
+    - 265
+    - clz4.low16.db000d?
+    - FHW-357
+  - - HYP-0438-axis-db20000d
+    - 270
+    - clz4.low16.axis.db20000d?
+    - FHW-358
+  - - HYP-0380-db40-clz4-low16
+    - 265
+    - clz4.low16.db400d?
+    - FHW-357
+  - - HYP-0741-db60000d-clz4-low16-publish
+    - 280
+    - clz4.low16.publish.db60000d?
+    - FHW-365
+- mnemonic: clz4
+  base_value: 0xdb00003d
+  expression: ''
+  publish_expression: ''
+  description: ''
+  predicate_note: ''
+  cells:
+  - - HYP-0340-db00-clz4-discard
+    - 265
+    - clz4.db003d?
+    - FHW-357
+  - - HYP-0440-axis-db20003d
+    - 270
+    - clz4.axis.db20003d?
+    - FHW-358
+  - - HYP-0443-axis-db40003d
+    - 270
+    - clz4.axis.db40003d?
+    - FHW-358
+  - - HYP-0383-db60-clz4-publish
+    - 265
+    - clz4.db603d?
+    - FHW-357
+- mnemonic: clznot4
+  base_value: 0xdf00003d
+  expression: ''
+  publish_expression: ''
+  description: ''
+  predicate_note: ''
+  cells:
+  - - HYP-0357-df00-clznot4-discard
+    - 265
+    - clznot4.df003d?
+    - FHW-357
+  - - HYP-0514-df20-clznot4-discard-publish
+    - 265
+    - clznot4.df203d?
+    - FHW-360
+  - - HYP-0398-df40-clznot4
+    - 265
+    - clznot4.df403d?
+    - FHW-357
+  - - HYP-0399-df60-clznot4-publish
+    - 265
+    - clznot4.df603d?
+    - FHW-357

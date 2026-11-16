@@ -1,0 +1,443 @@
+schema_version: 1
+description: ''
+mode_bits:
+  write: 22
+  publish: 21
+evidence:
+  FHW-330: ''
+  FHW-343: ''
+  FHW-344: ''
+  FHW-347: ''
+  FHW-357: ''
+  FHW-358: ''
+  FHW-360: ''
+  D8DB-R4: ''
+  D8DB-R2: ''
+  D8DB-SOURCE: ''
+  FLAG-EXT: ''
+  SECOND-TIER: ''
+  COND-TRANS: ''
+  COND-PRODUCER: ''
+  ALU-COMPL: ''
+  ALU-PRED: ''
+  EHASH-ALU: ''
+families:
+- name: ''
+  base_value: 0xdb800009
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_carry_rotation_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0341-db80-ror33i-discard
+    - ror33i.db8009?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0236-residual-dba0-test-ror33i
+    - testror33i.dba09?
+    - 260
+    - - FHW-343
+    - legacy-test
+  - - HYP-0453-axis-dbc00009
+    - ror32.axis.dbc00009?
+    - 270
+    - - FHW-358
+  - - HYP-0389-dbe0-ror33i-publish
+    - ror33i.dbe009?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdb80000c
+  count_source: register
+  computation: ''
+  description: ''
+  publish_action: publish_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0342-db80-ror-discard
+    - ror32.db800c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0445-axis-dba0000c
+    - ror32.axis.dba0000c?
+    - 270
+    - - FHW-358
+  - - HYP-0384-dbc0-ror
+    - ror32.dbc00c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0454-axis-dbe0000c
+    - ror32.axis.dbe0000c?
+    - 270
+    - - FHW-358
+- name: ''
+  base_value: 0xdb80000d
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0343-db80-rori-discard
+    - ror32i.db800d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0446-axis-dba0000d
+    - ror32.axis.dba0000d?
+    - 270
+    - - FHW-358
+  - - HYP-0385-dbc0-rori
+    - ror32i.dbc00d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0455-axis-dbe0000d
+    - ror32.axis.dbe0000d?
+    - 270
+    - - FHW-358
+- name: ''
+  base_value: 0xdb800014
+  count_source: register
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0344-db80-asr-discard
+    - asr32.db8014?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0447-axis-dba00014
+    - asr32.axis.dba00014?
+    - 270
+    - - FHW-358
+  - - HYP-0110-dbc14-asr
+    - asr32.dbc14?
+    - 200
+    - - D8DB-R4
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0456-axis-dbe00014
+    - asr32.axis.dbe00014?
+    - 270
+    - - FHW-358
+- name: ''
+  base_value: 0xdb800015
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0345-db80-asri-discard
+    - asr32i.db8015?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0448-axis-dba00015
+    - asr32.axis.dba00015?
+    - 270
+    - - FHW-358
+  - - HYP-0110-dbc15-asri
+    - asr32i.dbc15?
+    - 200
+    - - D8DB-R4
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0250-dbe-transform-low15
+    - asr32i
+    - 250
+    - - FHW-330
+      - FHW-344
+      - D8DB-SOURCE
+    - legacy-publish
+- name: ''
+  base_value: 0xdb80001c
+  count_source: register
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0346-db80-lsr-discard
+    - lsr32.db801c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0449-axis-dba0001c
+    - lsr32.axis.dba0001c?
+    - 270
+    - - FHW-358
+  - - HYP-0110-dbc1c-lsr
+    - lsr32.dbc1c?
+    - 200
+    - - D8DB-R4
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0390-dbe0-lsr-publish
+    - lsr32.dbe01c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdb80001d
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0347-db80-lsri-discard
+    - lsr32i.db801d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0236-residual-dba0-test-lsri
+    - testlsr32i.dba1d?
+    - 260
+    - - FHW-343
+    - legacy-test
+  - - HYP-0110-dbc1d-lsri
+    - lsr32i.dbc1d?
+    - 200
+    - - D8DB-R2
+      - COND-TRANS
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0110-dbe1d-lsri
+    - lsr32i.dbe1d?
+    - 200
+    - - D8DB-R2
+      - D8DB-R4
+      - ALU-COMPL
+      - ALU-PRED
+      - EHASH-ALU
+    - legacy-raw
+- name: ''
+  base_value: 0xdb80002c
+  count_source: register
+  computation: ''
+  description: ''
+  publish_action: publish_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0348-db80-rol-discard
+    - rol32.db802c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0450-axis-dba0002c
+    - rol32.axis.dba0002c?
+    - 270
+    - - FHW-358
+  - - HYP-0386-dbc0-rol
+    - rol32.dbc02c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0457-axis-dbe0002c
+    - rol32.axis.dbe0002c?
+    - 270
+    - - FHW-358
+- name: ''
+  base_value: 0xdb80002d
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0349-db80-roli-discard
+    - rol32i.db802d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0451-axis-dba0002d
+    - rol32.axis.dba0002d?
+    - 270
+    - - FHW-358
+  - - HYP-0387-dbc0-roli
+    - rol32i.dbc02d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0391-dbe0-roli-publish
+    - rol32i.dbe02d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdb800035
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0350-db80-lsli35-discard
+    - lsl32i.db8035?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0452-axis-dba00035
+    - lsl32.axis.dba00035?
+    - 270
+    - - FHW-358
+  - - HYP-0388-dbc0-lsli35
+    - lsl32i.dbc035?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0458-axis-dbe00035
+    - lsl32.axis.dbe00035?
+    - 270
+    - - FHW-358
+- name: ''
+  base_value: 0xdb80003c
+  count_source: register
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0351-db80-lsl-discard
+    - lsl32.db803c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0236-residual-dba0-test-lslr
+    - testlsl32.dba3c?
+    - 260
+    - - FHW-343
+    - legacy-test
+  - - HYP-0110-dbc3c-lsl
+    - lsl32.dbc3c?
+    - 200
+    - - D8DB-R4
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0392-dbe0-lsl-publish
+    - lsl32.dbe03c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdb80003d
+  count_source: immediate
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0352-db80-lsli-discard
+    - lsl32i.db803d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0236-residual-dba0-test-lsli
+    - testlsl32i.dba3d?
+    - 260
+    - - FHW-343
+    - legacy-test
+  - - HYP-0110-dbc3d-lsli
+    - lsl32i.dbc3d?
+    - 200
+    - - D8DB-R2
+      - COND-TRANS
+      - COND-PRODUCER
+      - FLAG-EXT
+    - legacy-raw
+  - - HYP-0393-dbe0-lsli-publish
+    - lsl32i.dbe03d?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdf80001c
+  count_source: register
+  count_modifier: reverse
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0515-df80-lsr-reverse-discard
+    - lsr32.reverse.df801c?
+    - 265
+    - - FHW-360
+  - - HYP-0516-dfa0-lsr-reverse-discard-publish
+    - lsr32.reverse.dfa01c?
+    - 265
+    - - FHW-360
+  - - HYP-0255-dfc-copy
+    - lsr32.revcount
+    - 250
+    - - FHW-330
+      - FHW-347
+  - - HYP-0519-dfe0-lsr-reverse-publish
+    - lsr32.reverse.dfe01c?
+    - 265
+    - - FHW-360
+- name: ''
+  base_value: 0xdf80002c
+  count_source: register
+  count_modifier: increment
+  computation: ''
+  description: ''
+  publish_action: publish_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0358-df80-ror-revcount-discard
+    - ror32.revcount.df802c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0517-dfa0-ror-increment-discard-publish
+    - ror32.increment.dfa02c?
+    - 265
+    - - FHW-360
+  - - HYP-0400-dfc0-ror-revcount
+    - ror32.revcount.dfc02c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0402-dfe0-ror-revcount-publish
+    - ror32.revcount.dfe02c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+- name: ''
+  base_value: 0xdf80003c
+  count_source: register
+  count_modifier: reverse
+  computation: ''
+  description: ''
+  publish_action: publish_shift_conditions(computed)
+  publish_effect: ''
+  cells:
+  - - HYP-0359-df80-lsl-revcount-discard
+    - lsl32.revcount.df803c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0518-dfa0-lsl-reverse-discard-publish
+    - lsl32.reverse.dfa03c?
+    - 265
+    - - FHW-360
+  - - HYP-0401-dfc0-lsl-revcount
+    - lsl32.revcount.dfc03c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER
+  - - HYP-0403-dfe0-lsl-revcount-publish
+    - lsl32.revcount.dfe03c?
+    - 265
+    - - FHW-357
+      - SECOND-TIER

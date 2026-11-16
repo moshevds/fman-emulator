@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fman-emu"
+version = "0.1.0"
+description = "Instruction-level emulator of the LS1046A FMan controller RISC, with behavioural models of the FMan ports and of board devices"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=5.1"]
+
+[tool.setuptools]
+packages = ["fman_emu", "fman_emu._vendor", "fman_emu._vendor.qeisa"]
+
+[tool.setuptools.package-data]
+"fman_emu._vendor" = ["README.md", "isa/*.yaml"]
